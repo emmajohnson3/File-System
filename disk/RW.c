@@ -30,21 +30,17 @@ void CreateDisk(){
 }
 
 int main(int argc, char* argv[]) {
-    printf("attempting");
-    CreateDisk();
-    FILE* disk = fopen("vdisk", "wb"); // Open the file to be written to in binary mode
+    FILE* disk = fopen("vdisk", "w+b"); // Notice that we are now reading and writing
     writeBlock(disk, 2, "Hello world!");
-    fclose(disk);
-    printf("disk created");
-    printf("blach blach");
-
-    disk = fopen("vdisk", "w+b"); 
-    char* buffer = malloc(sizeof(char) * BLOCK_SIZE * 3);
+    char* buffer = malloc(sizeof(char) * BLOCK_SIZE*2);
+    printf("aaaaaa");
     readBlock(disk, 2, buffer);
     //printf("%s", buffer);
-    for (int i = 0; i < BLOCK_SIZE; i++){
+    for (int i = 0; i < BLOCK_SIZE*2; i++){
         printf("%2x ", buffer[i]);
     }
+
+    free(buffer);
     fclose(disk);
     return 0;
 }
