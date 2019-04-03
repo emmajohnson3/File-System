@@ -29,6 +29,7 @@ void CreateDisk(){
 }
 
 int main(int argc, char* argv[]) {
+    printf("attempting");
     CreateDisk();
     printf("disk created");
     return 0;
