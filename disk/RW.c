@@ -36,5 +36,6 @@ int main(int argc, char* argv[]) {
     writeBlock(disk, 2, "Hello world!");
     fclose(disk);
     printf("disk created");
+    printf("blach blach");
     return 0;
 }
