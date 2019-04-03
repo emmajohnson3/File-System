@@ -22,6 +22,7 @@ void writeBlock(FILE* disk, int blockNum, char* data){
 }
 
 void CreateDisk(){
+    remove("vdisk");
     FILE *fp = fopen("vdisk", "w");
     fseek(fp, FILE_SIZE -1 , SEEK_SET);
     fputc('\0', fp);
@@ -31,6 +32,9 @@ void CreateDisk(){
 int main(int argc, char* argv[]) {
     printf("attempting");
     CreateDisk();
+    FILE* disk = fopen("vdisk", "wb"); // Open the file to be written to in binary mode
+    writeBlock(disk, 2, "Hello world!");
+    fclose(disk);
     printf("disk created");
     return 0;
 }
