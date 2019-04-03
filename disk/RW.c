@@ -8,14 +8,14 @@ const int FILE_SIZE = 2000000;
 const int OFFSET = 4096;
 
 void readBlock(FILE* disk, int blockNum, char* buffer){
-        FILE* disk = fopen("vdisk", "w+b");
+        disk = fopen("vdisk", "w+b");
         fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
         fread(buffer, BLOCK_SIZE, 1, disk);
         fclose(disk);
 }
 
 void writeBlock(FILE* disk, int blockNum, char* data){
-        FILE* disk = fopen("vdisk", "w+b");
+        disk = fopen("vdisk", "w+b");
         fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
         fwrite(data, BLOCK_SIZE, 1, disk); // will overwrite 
         fclose(disk);  
