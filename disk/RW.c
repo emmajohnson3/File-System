@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     printf("disk created");
     printf("blach blach");
 
-    FILE* disk = fopen("vdisk", "w+b"); 
+    disk = fopen("vdisk", "w+b"); 
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE * 3);
     readBlock(disk, 2, buffer);
     //printf("%s", buffer);
