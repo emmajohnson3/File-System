@@ -28,7 +28,7 @@ void CreateDisk(){
 
     //init superblock
     char* super = malloc(512);
-    super[0] = 666;
+    super[0] = 66;
     super[1] = 2; //super + vector (num blocks)
     super[1] = 0; //(num inodes)
     writeBlock(fp, 2, super);
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 
     FILE* disk = fopen("vdisk", "w+b");
     createFile(disk);    
-    writeToFile(disk, "Hello World!");
+    writeToFile(disk, "Hello World! 2");
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     readFile(disk, buffer);
     printf("%s\n", buffer);
