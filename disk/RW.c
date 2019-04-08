@@ -43,6 +43,7 @@ void CreateDisk(){
 char* createEmptyInode() {
     char* inode = malloc(32);
     inode[10] = 3;
+    inode[3] = 3;
     return inode;
 }
 
@@ -73,10 +74,11 @@ void readFile(FILE* disk, char* buffer) {
 }
 
 int main(int argc, char* argv[]) {
-
+    
+    CreateDisk();
     FILE* disk = fopen("vdisk", "w+b");
     createFile(disk);    
-    writeToFile(disk, "Hello World! 2");
+    writeToFile(disk, "Hello World! 3");
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     readFile(disk, buffer);
     printf("%s\n", buffer);
