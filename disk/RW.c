@@ -77,7 +77,7 @@ char* createInode(FILE* disk, char* data) {
 //returns the int indentifier of the inode
 int createFile(FILE* disk, char* data) {
     //allocate inode    
-    char* inode = createInode(data);
+    char* inode = createInode(disk,data);
     //find where to put inode
     //writeBlock(disk, 2, inode); 
     //write the data to blocks specified by inode
