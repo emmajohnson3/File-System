@@ -31,7 +31,9 @@ void CreateDisk(){
     super[0] = 66;
     super[1] = 2; //super + vector (num blocks)
     super[3] = 0; //(num inodes)
-    writeBlock(fp, 0, super);
+    writeBlock(fp, 1, super);
+    writeBlock(fp, 2, super);
+    writeBlock(fp, 3, super);
     free(super);
 
     //init inode map
