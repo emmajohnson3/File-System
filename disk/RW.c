@@ -31,7 +31,7 @@ void CreateDisk(FILE* disk){
     super[3] = 0; //(num inodes)
     writeBlock(disk, 0, super);
     free(super);
-  /*
+  
     //set free block vector
     char* block = malloc(512);
     for(int i = 0; i < 512; i++){
@@ -41,7 +41,7 @@ void CreateDisk(FILE* disk){
         super[i] = 1;
     }
     writeBlock(disk, 1, block);
-    free(block);*/
+    free(block);
 }
 
 void DeleteDisk(){
@@ -61,7 +61,7 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 char* createInode() {
     char* inode = malloc(32);
     inode[0] = 9;//file size
-    inode[10] = 3; 
+    inode[10] = 3; //breaks if changed
     return inode;
 }
 
