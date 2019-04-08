@@ -32,33 +32,41 @@ void CreateDisk(FILE* disk){
     writeBlock(disk, 0, super);
     free(super);
 
-    //init inode map
-    
+    //set free block vector
+    char* block = malloc(512);
+    for(int i = 0; i < 512; i++){
+        super[i] = 0;
+    }
+    for(int i = 0; i < 9; i++){
+        super[i] = 1;
+    }
+    writeBlock(disk, 1, block);
+    free(block);
 }
+
 void DeleteDisk(){
     remove("vdisk");
 }
 
 /*********** FS instructions ******************************/
 
-char* createEmptyInode() {
+int getNumBlocks(FILE* disk) {//gets num of blocks being used
+    char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 0, buffer);
+    int a = buffer[1];
+    free(buffer);
+    return a;
+}
+
+char* createInode() {
     char* inode = malloc(32);
-    inode[10] = 3;
+    inode[0] = ;
     return inode;
 }
 
 void createFile(FILE* disk) {
-    char* inode = createEmptyInode();
-    // Add more things to inode?
-    writeBlock(disk, 2, inode);
-    //init superblock
-    char* super = malloc(512);
-    super[0] = 66;
-    super[1] = 2; //super + vector (num blocks)
-    super[3] = 0; //(num inodes)
-    writeBlock(disk, 1, super);
-    free(super);
-    
+    char* inode = createInode();
+    writeBlock(disk, 2, inode); 
     free(inode);
 }
 
@@ -90,18 +98,8 @@ FILE* disk = fopen("vdisk", "w+b");
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     readFile(disk, buffer);
     printf("%s\n", buffer);
-
-    char* inodeBuffer = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, 0, inodeBuffer);
-    int a = inodeBuffer[0];
-    int b = inodeBuffer[1];
-    int c = inodeBuffer[2];
-    printf("%d\n", a);
-    printf("%d\n", b);
-    printf("%d\n", c);
-    free(inodeBuffer);
-
     free(buffer);
+
     fclose(disk);
     return 0;
 }
