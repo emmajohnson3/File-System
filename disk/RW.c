@@ -4,8 +4,8 @@
 const int BLOCK_SIZE = 512;
 const int NUM_BLOCKS = 4096;
 const int INODE_SIZE = 32;
-const int FILE_SIZE = 2000000;
-const int OFFSET = 4096;
+const int FILE_SIZE = 2000000;//2mb
+const int INODE_OFFSET = 4096; //num of blocks for inodes
 
 /***********disk instructions ******************************/
 
@@ -37,6 +37,9 @@ void CreateDisk(FILE* disk){
     for(int i = 0; i < 512; i++){
         super[i] = 0;
     }
+    for(int i = 0; i < 512; i++){
+        super[i] = 0;
+    }
     for(int i = 0; i < 9; i++){
         super[i] = 1;
     }
@@ -60,6 +63,9 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 
 char* createInode() {
     char* inode = malloc(32);
+    for(int i = 0; i < 512; i++){
+        inode[i] = 0;
+    }
     inode[0] = 9;//file size
     inode[10] = 3; //breaks if changed
     return inode;
@@ -75,7 +81,7 @@ void writeToFile(FILE* disk, char* data) {
     char* inodeBuffer = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 2, inodeBuffer);
     int fileBlockNumber = inodeBuffer[10];
-    writeBlock(disk, fileBlockNumber, data);
+    writeBlock(disk, fileBlockNumber, data)     ;
 
     free(inodeBuffer);
 }
