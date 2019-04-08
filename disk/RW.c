@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 const int BLOCK_SIZE = 512;
 const int NUM_BLOCKS = 4096;
 const int INODE_SIZE = 32;
@@ -67,7 +68,7 @@ char* createInode(FILE* disk, char* data) {
     char* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);
     for(int i = 0; i < 11; i++){
-       printf("%s\n", blocks[i]);     
+       printf("%d\n", blocks[i]);     
     }
 
     return inode;
@@ -86,7 +87,7 @@ int createFile(FILE* disk, char* data) {
 
 int createDirectory(FILE* disk, char* data) {
     //allocate inode    
-    char* inode = createInode(data);
+    char* inode = createInode(disk,data);
     inode[1] = 1;//means its a directory
     //find where to put inode
     
