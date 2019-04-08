@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
     printf("%s\n", buffer);
 
     char* inodeBuffer = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, 1, inodeBuffer);
+    readBlock(disk, 0, inodeBuffer);
     int a = inodeBuffer[0];
     int b = inodeBuffer[1];
     int c = inodeBuffer[2];
