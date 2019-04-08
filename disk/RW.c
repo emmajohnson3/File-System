@@ -90,11 +90,11 @@ void readFile(FILE* disk, char* buffer) {
 
 int main(int argc, char* argv[]) {
 FILE* disk = fopen("vdisk", "w+b");
-    DeleteDisk();
+    //DeleteDisk();
     CreateDisk(disk);
 
     createFile(disk);    
-    writeToFile(disk, "Hello World! 3");
+    writeToFile(disk, "Hello World! 4");
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     readFile(disk, buffer);
     printf("%s\n", buffer);
