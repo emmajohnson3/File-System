@@ -9,6 +9,16 @@ const int OFFSET = 4096;
 
 /***********disk instructions ******************************/
 
+void readBlock(FILE* disk, int blockNum, char* buffer){
+    fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
+    fread(buffer, BLOCK_SIZE, 1, disk);
+}
+
+void writeBlock(FILE* disk, int blockNum, char* data){
+    fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
+    fwrite(data, BLOCK_SIZE, 1, disk); 
+}
+
 void CreateDisk(){
     remove("vdisk");
     //make it 2 mb
@@ -26,16 +36,6 @@ void CreateDisk(){
 
     //init inode map
     fclose(fp);
-}
-
-void readBlock(FILE* disk, int blockNum, char* buffer){
-    fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
-    fread(buffer, BLOCK_SIZE, 1, disk);
-}
-
-void writeBlock(FILE* disk, int blockNum, char* data){
-    fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
-    fwrite(data, BLOCK_SIZE, 1, disk); 
 }
 
 /*********** FS instructions ******************************/
