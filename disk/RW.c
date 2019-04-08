@@ -54,6 +54,14 @@ void createFile(FILE* disk) {
     char* inode = createEmptyInode();
     // Add more things to inode?
     writeBlock(disk, 2, inode);
+    //init superblock
+    char* super = malloc(512);
+    super[0] = 66;
+    super[1] = 2; //super + vector (num blocks)
+    super[3] = 0; //(num inodes)
+    writeBlock(disk, 1, super);
+    writeBlock(disk, 0, super);
+    free(super);
     
     free(inode);
 }
