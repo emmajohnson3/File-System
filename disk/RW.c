@@ -30,8 +30,8 @@ void CreateDisk(){
     char* super = malloc(512);
     super[0] = 66;
     super[1] = 2; //super + vector (num blocks)
-    super[1] = 0; //(num inodes)
-    writeBlock(fp, 2, super);
+    super[3] = 0; //(num inodes)
+    writeBlock(fp, 0, super);
     free(super);
 
     //init inode map
