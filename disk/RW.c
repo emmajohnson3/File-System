@@ -7,6 +7,10 @@ const int NUM_BLOCKS = 4096;
 const int INODE_SIZE = 32;
 const int FILE_SIZE = 2000000;//2mb
 const int INODE_OFFSET = 4096; //num of blocks for inodes
+/***********bit stuff from aniliitb10 ******************************/
+#define SetBit(A,k)     ( A[(k/32)] |= (1 << (k%32)) )
+#define ClearBit(A,k)   ( A[(k/32)] &= ~(1 << (k%32)) )            
+#define TestBit(A,k)    ( A[(k/32)] & (1 << (k%32)) )
 
 /***********disk instructions ******************************/
 
@@ -35,11 +39,11 @@ void CreateDisk(FILE* disk){
   
     //set free block vector
     int* block = malloc(512); //this needs to be in signed char
-    for(int i = 0; i < 512; i++){
-        super[i] = 0;
+    for(int i = 0; i < NUM_BLOCKS; i++){
+        ClearBit(block,i);
     }
-    for(int i = 0; i < 9; i++){
-        super[i] = 1;
+    for(int i = 0; i < 9; i++){ 
+        SetBit(block,i);
     }
     writeBlock(disk, 1, block);
     free(block);
@@ -67,8 +71,8 @@ char* createInode(FILE* disk, char* data) {
     //find what blocks are free
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);
-    for(int i = 0; i < 11; i++){
-       printf("%d\n", blocks[i]);     
+    for(int i = 0; i < 12; i++){
+       printf("%d",TestBit(blocks,i));  
     }
 
     return inode;
