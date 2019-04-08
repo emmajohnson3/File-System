@@ -34,7 +34,7 @@ void CreateDisk(FILE* disk){
     free(super);
   
     //set free block vector
-    char* block = malloc(512); //this needs to be in signed char
+    int* block = malloc(512); //this needs to be in signed char
     for(int i = 0; i < 512; i++){
         super[i] = 0;
     }
@@ -65,7 +65,7 @@ char* createInode(FILE* disk, char* data) {
     inode[1] = 0;
 
     //find what blocks are free
-    char* blocks = malloc(sizeof(char) * BLOCK_SIZE);
+    int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);
     for(int i = 0; i < 11; i++){
        printf("%d\n", blocks[i]);     
