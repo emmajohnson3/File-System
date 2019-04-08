@@ -43,7 +43,8 @@ void CreateDisk(){
 char* createEmptyInode() {
     char* inode = malloc(32);
     inode[10] = 3;
-    inode[3] = 3;
+    inode[11] = 3;
+    inode[6] = 3;
     return inode;
 }
 
