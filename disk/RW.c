@@ -16,7 +16,7 @@ void readBlock(FILE* disk, int blockNum, char* buffer){
 
 void writeBlock(FILE* disk, int blockNum, char* data){
     fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
-    fwrite(data, BLOCK_SIZE, 1, disk); 
+    fwrite(data, strlen(data), 1, disk); 
 }
 
 void CreateDisk(FILE* disk){
@@ -33,10 +33,7 @@ void CreateDisk(FILE* disk){
     free(super);
   
     //set free block vector
-    char* block = malloc(512);
-    for(int i = 0; i < 512; i++){
-        super[i] = 0;
-    }
+    char* block = malloc(512); //this needs to be in signed char
     for(int i = 0; i < 512; i++){
         super[i] = 0;
     }
@@ -61,19 +58,39 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
     return a;
 }
 
-char* createInode() {
+char* createInode(FILE* disk, char* data) {
     char* inode = malloc(32);
-    for(int i = 0; i < 512; i++){
-        inode[i] = 0;
+    inode[0] = strlen(data);//file size
+    inode[1] = 0;
+
+    //find what blocks are free
+    char* blocks = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 1, blocks);
+    for(int i = 0; i < 11; i++){
+       printf("%s\n", blocks[i]);     
     }
-    inode[0] = 9;//file size
-    inode[10] = 3; //breaks if changed
+
     return inode;
 }
 
-void createFile(FILE* disk) {
-    char* inode = createInode();
-    writeBlock(disk, 2, inode); 
+//returns the int indentifier of the inode
+int createFile(FILE* disk, char* data) {
+    //allocate inode    
+    char* inode = createInode(data);
+    //find where to put inode
+    //writeBlock(disk, 2, inode); 
+    //write the data to blocks specified by inode
+    free(inode);
+}
+
+
+int createDirectory(FILE* disk, char* data) {
+    //allocate inode    
+    char* inode = createInode(data);
+    inode[1] = 1;//means its a directory
+    //find where to put inode
+    
+    //write the data to blocks specified by inode
     free(inode);
 }
 
@@ -100,11 +117,11 @@ FILE* disk = fopen("vdisk", "w+b");
     //DeleteDisk();
     CreateDisk(disk);
 
-    createFile(disk);    
-    writeToFile(disk, "Hello World! 4");
+    createFile(disk, "Hello World! 5"); 
+    writeBlock(disk, 4, "Hello World!!");  
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
-    readFile(disk, buffer);
-    printf("%s\n", buffer);
+    //readFile(disk, buffer);
+    //printf("%s\n", buffer);
     free(buffer);
 
     fclose(disk);
