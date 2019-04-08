@@ -19,23 +19,24 @@ void writeBlock(FILE* disk, int blockNum, char* data){
     fwrite(data, BLOCK_SIZE, 1, disk); 
 }
 
-void CreateDisk(){
-    remove("vdisk");
+void CreateDisk(FILE* disk){
     //make it 2 mb
-    FILE *fp = fopen("vdisk", "w+b");
-    fseek(fp, FILE_SIZE -1 , SEEK_SET);
-    fputc('\0', fp);
+    fseek(disk, FILE_SIZE -1 , SEEK_SET);
+    fputc('\0', disk);
 
     //init superblock
     char* super = malloc(512);
     super[0] = 66;
     super[1] = 2; //super + vector (num blocks)
     super[3] = 0; //(num inodes)
-    writeBlock(fp, 0, super);
+    writeBlock(disk, 0, super);
     free(super);
 
     //init inode map
-    fclose(fp);
+    
+}
+void DeleteDisk(){
+    remove("vdisk");
 }
 
 /*********** FS instructions ******************************/
@@ -80,9 +81,10 @@ void readFile(FILE* disk, char* buffer) {
 }
 
 int main(int argc, char* argv[]) {
-    
-    CreateDisk();
-    FILE* disk = fopen("vdisk", "w+b");
+FILE* disk = fopen("vdisk", "w+b");
+    DeleteDisk();
+    CreateDisk(disk);
+
     createFile(disk);    
     writeToFile(disk, "Hello World! 3");
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
