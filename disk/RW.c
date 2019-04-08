@@ -14,7 +14,7 @@ const int INODE_OFFSET = 4096; //num of blocks for inodes
 
 /***********disk instructions ******************************/
 
-void readBlock(FILE* disk, int blockNum, char* buffer){
+void readBlock(FILE* disk, int blockNum, void* buffer){
     fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
     fread(buffer, BLOCK_SIZE, 1, disk);
 }
