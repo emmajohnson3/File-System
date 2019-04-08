@@ -60,7 +60,7 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 
 char* createInode() {
     char* inode = malloc(32);
-    inode[0] = ;
+    inode[0] = 9;//file size
     return inode;
 }
 
