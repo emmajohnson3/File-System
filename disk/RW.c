@@ -84,8 +84,10 @@ char* createInode(FILE* disk, char* data) {
        //("%d\n",TestBit(blocks,i));
        if(TestBit(blocks,i) == 0){
                //set bit and add to inode block list
+               printf("allocating block:%d\n", i);
                SetBit(blocks,i);
                inode[2+k] = i;
+               printf("confirm block:%d\n", inode[2+k]);
                break;
        }  
     }//for
