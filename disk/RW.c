@@ -81,13 +81,12 @@ char* createInode(FILE* disk, char* data) {
 
     for(int k = 0; k< num ; k++){
     for(; i < NUM_BLOCKS ; i++){ //find empty
-       //("%d\n",TestBit(blocks,i));
        if(TestBit(blocks,i) == 0){
                //set bit and add to inode block list
                printf("allocating block:%d\n", i);
                SetBit(blocks,i);
                inode[2+k] = i;
-               printf("confirm block:%s\n", inode[2+k]);
+               printf("confirm block:%d\n", inode[2+k]);
                break;
        }  
     }//for
@@ -97,7 +96,7 @@ char* createInode(FILE* disk, char* data) {
             printf("Error: out of content memory");
             exit(1);
     }
-
+    writeBlock(disk, 1, blocks);
     free(blocks);
     return inode;
 }
@@ -116,6 +115,7 @@ int createFile(FILE* disk, char* data) {
     for(int i = 10; i < 209; i++){ //find empty
        if(TestBit(blocks,i) == 0){
                SetBit(blocks,i);
+               writeBlock(disk, 1, blocks);
                id = i;
                break;
        }  
@@ -124,14 +124,15 @@ int createFile(FILE* disk, char* data) {
     //write inode to block
     writeBlock(disk, id, inode);
 
-    printf("inode is in block: %s", id);
-    readBlock(disk, id, blocks);
+    printf("inode is in block: %d", id);
+    int* help = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, id, help);
     for(int i =0; i< 10 ; i++ ){
-          printf("inode: %s       block: %s\n", inode[2+i],blocks[2+i] );
+          printf("inode: %d       block: %s\n", inode[2+i],help[2+i] );
     }//for
 
     //write the data to blocks specified by inode
-    //printf("%s\n",data);
+    
     /*
     for(int i =0; inode[2+i] != 0 ; i++ ){
             char part[BLOCK_SIZE];
