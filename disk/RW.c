@@ -35,6 +35,7 @@ void CreateDisk(FILE* disk){
     super[0] = 209;
     super[1] = 2; //super + vector (num blocks)
     super[3] = 0; //(num inodes)
+    super[10] = 3; //(num inodes)
     writeBlock(disk, 0, super);
     free(super);
   
@@ -68,9 +69,9 @@ char* createInode(FILE* disk, char* data) {
     char* super = malloc(512);
     int num = 0;
     int size = strlen(data);//file size
-    super[0] = size;
-    super[1] = 2; //super + vector (num blocks)
-    super[5] = 3; //(num inodes)
+    super[0] = size + '0';
+    super[1] = 599; //super + vector (num blocks)
+    super[10] = 3; //(num inodes)
     writeBlock(disk, 10, super);
     /*char* inode = malloc(BLOCK_SIZE);
     inode[0] = (char) size;//file size
