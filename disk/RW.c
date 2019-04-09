@@ -87,7 +87,7 @@ char* createInode(FILE* disk, char* data) {
                printf("allocating block:%d\n", i);
                SetBit(blocks,i);
                inode[2+k] = i;
-               printf("confirm block:%c\n", inode[2+k]);
+               printf("confirm block:%s\n", inode[2+k]);
                break;
        }  
     }//for
@@ -124,10 +124,10 @@ int createFile(FILE* disk, char* data) {
     //write inode to block
     writeBlock(disk, id, inode);
 
-    printf("inode is in block: %d", id);
+    printf("inode is in block: %s", id);
     readBlock(disk, id, blocks);
     for(int i =0; i< 10 ; i++ ){
-          printf("inode: %c       block: %c\n", inode[2+i],blocks[2+i] );
+          printf("inode: %s       block: %s\n", inode[2+i],blocks[2+i] );
     }//for
 
     //write the data to blocks specified by inode
