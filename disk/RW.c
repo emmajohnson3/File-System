@@ -69,7 +69,7 @@ char* createInode(FILE* disk, char* data) {
     super[0] = 209;
     super[1] = 2; //super + vector (num blocks)
     super[3] = 0; //(num inodes)
-    writeBlock(disk, 0, super);
+    writeBlock(disk, 10, super);
 
     /*int num = 0;
     int size = strlen(data);//file size
