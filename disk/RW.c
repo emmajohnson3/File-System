@@ -158,7 +158,7 @@ int createFile(FILE* disk, char* data) {
 
 int createDirectory(FILE* disk, char* data) {
     //allocate inode    
-    char* inode = createInode(disk,data);
+    short* inode = createInode(disk,data);
     inode[1] = 1;//means its a directory
     //find where to put inode
     
