@@ -32,7 +32,7 @@ void CreateDisk(FILE* disk){
 
     //init superblock
     char* super = malloc(512);
-    super[0] = 66;
+    super[0] = 209;
     super[1] = 2; //super + vector (num blocks)
     super[3] = 0; //(num inodes)
     writeBlock(disk, 0, super);
