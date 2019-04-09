@@ -66,14 +66,13 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 
 char* createInode(FILE* disk, char* data) {
     char* super = malloc(512);
-    super[0] = 209;
-    super[1] = 2; //super + vector (num blocks)
-    super[3] = 0; //(num inodes)
-    writeBlock(disk, 10, super);
-
-    /*int num = 0;
+    int num = 0;
     int size = strlen(data);//file size
-    char* inode = malloc(BLOCK_SIZE);
+    super[0] = size;
+    super[1] = 2; //super + vector (num blocks)
+    super[5] = 3; //(num inodes)
+    writeBlock(disk, 10, super);
+    /*char* inode = malloc(BLOCK_SIZE);
     inode[0] = (char) size;//file size
     inode[1] = 0;
     
