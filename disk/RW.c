@@ -111,7 +111,7 @@ int createFile(FILE* disk, char* data) {
 
     int id = 0;
 
-    for(int i = 9; i < 209; i++){ //find empty
+    for(int i = 10; i < 209; i++){ //find empty
        if(TestBit(blocks,i) == 0){
                SetBit(blocks,i);
                id = i;
@@ -121,10 +121,16 @@ int createFile(FILE* disk, char* data) {
 
     //write inode to block
     writeBlock(disk, id, inode);
+
     printf("inode is in block: %d", id);
+    readBlock(disk, id, blocks);
+    for(int i =0; blocks[2+i] != 0 ; i++ ){
+          printf("inode: %d       block: %d", inode[2+i],blocks[2+i] );
+    }//for
 
     //write the data to blocks specified by inode
     //printf("%s\n",data);
+    /*
     for(int i =0; inode[2+i] != 0 ; i++ ){
             char part[BLOCK_SIZE];
             strncpy(part, data, BLOCK_SIZE);
@@ -132,6 +138,7 @@ int createFile(FILE* disk, char* data) {
             data += BLOCK_SIZE;
             writeBlock(disk, inode[2+i], part);
     }//for
+    */
 
     free(inode);
     free(blocks);
