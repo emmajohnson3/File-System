@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 const int BLOCK_SIZE = 512;
 const int NUM_BLOCKS = 4096;
 const int INODE_SIZE = 32;
@@ -42,7 +43,7 @@ void CreateDisk(FILE* disk){
     for(int i = 0; i < NUM_BLOCKS; i++){
         ClearBit(block,i);
     }
-    for(int i = 0; i < 9; i++){ 
+    for(int i = 0; i < 9; i++){  //then next 200 are for i nodes
         SetBit(block,i);
     }
     writeBlock(disk, 1, block);
@@ -64,17 +65,38 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 }
 
 char* createInode(FILE* disk, char* data) {
+    int num = 0;
+    int size = trlen(data);//file size
     char* inode = malloc(32);
-    inode[0] = strlen(data);//file size
+    inode[0] = size;//file size
     inode[1] = 0;
+
+    //calc how many blocks
+    num = (size/BLOCK_SIZE)+1; 
 
     //find what blocks are free
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);
-    for(int i = 0; i < 12; i++){
-       printf("%d\n",TestBit(blocks,i));  
+    int i = 209;
+
+    for(int k = 0; k< num ; k++){
+    for(; i < NUM_BLOCKS ; i++){ //find empty
+       //("%d\n",TestBit(blocks,i));
+       if(TestBit(blocks,i) == 0){
+               //set bit and add to inode block list
+               SetBit(blocks,i);
+               inode[2+k] = i;
+               break;
+       }  
+    }//for
+    }//for
+
+    if(i == NUM_BLOCKS-1){
+            printf("Error: out of content memory");
+            exit(1);
     }
 
+    free(blocks);
     return inode;
 }
 
@@ -82,10 +104,36 @@ char* createInode(FILE* disk, char* data) {
 int createFile(FILE* disk, char* data) {
     //allocate inode    
     char* inode = createInode(disk,data);
+    
     //find where to put inode
-    //writeBlock(disk, 2, inode); 
+    int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 1, blocks);
+
+    int id = 0;
+
+    for(int i = 9; i < 209; i++){ //find empty
+       if(TestBit(blocks,i) == 0){
+               SetBit(blocks,i);
+               id = i;
+               break;
+       }  
+    }//for
+
+    //write inode to block
+    writeBlock(disk, id, inode);
+
     //write the data to blocks specified by inode
+    printf("%s\n",data);
+    for(int i =0; inode[2+i] != 0 ; i++ ){
+            char part[3];
+            strncpy(part, data, 3);
+            printf("%s\n",part);
+            data += 3;
+            //writeBlock(disk, inode[2+i], );
+    }//for
+
     free(inode);
+    free(blocks);
 }
 
 
@@ -122,12 +170,12 @@ FILE* disk = fopen("vdisk", "w+b");
     //DeleteDisk();
     CreateDisk(disk);
 
-    createFile(disk, "Hello World! 5"); 
-    writeBlock(disk, 4, "Hello World!!");  
+    createFile(disk, "y2apffIWMWnotk8uP0k2KuR0MkDpswtqMEJkGP4TcA1KgAc7d3AfAB78IaRTtNMtobRYefjXl0XzmKcRnvyU9Y006Z1raS0W0sZj8tgHbK4UXfTSpIpcFW3KGBIhduHicC5Pobfr9scWZeCgleJamIx4upRyl7Dx10pcKyXAe0N7BjZki6Ve1giPhtUwvItZDPUxs8NAbEoxxosl87aXBT8zCjv7xX6SwDb9s6jXI0fhUQ1o1qfSjGftUmi5mQ4CHcFlBTfhNBOOe3PIPKvaJ5Kwex3U5V25vbhB7ayEtJoHqDBtD70GOqpUfCpN8QazApuJd0301D5Rl0B6NXd54YBlDlI4tgwvqx6aosqZ99WjGaTutg5Ew8IpRn9lMTg9B53AeEcDn9mgQzA4R7rcGO8X189OA5BQH1W0ZWOJ0vGcsXcSXm5GLcAh3IG4P5h8WNYOpmcz14Ezmb2Fnf67RpTBYnI0tz1Mh2hOt04TPswPUDHJpv3z2tu47CNm6UJ5HrRG6nUr1GkaFPt02IOpaepwFqJ4bnVZLxT3fzA0oKaXKvCeMv02dpGMVL6bCFi0wtF4Lo9lHC5A9NqcawYC4UK0"); 
     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     //readFile(disk, buffer);
     //printf("%s\n", buffer);
     free(buffer);
+    printf("done\n");
 
     fclose(disk);
     return 0;
