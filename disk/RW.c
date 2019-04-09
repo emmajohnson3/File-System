@@ -197,7 +197,7 @@ FILE* disk = fopen("vdisk", "w+b");
    // char* buffer = readFile(disk, file);
     //printf("%s\n", buffer);
 
-    free(buffer);
+   // free(buffer);
     printf("done\n");
 
     fclose(disk);
