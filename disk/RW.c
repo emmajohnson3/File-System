@@ -70,7 +70,9 @@ char* createInode(FILE* disk, char* data) {
     char* inode = malloc(BLOCK_SIZE);
     inode[0] = (char) size;//file size
     inode[1] = 0;
+    inode[5] = 3;
     printf("size:%d\n", size);
+    /*
     //calc how many blocks
     num = (size/BLOCK_SIZE)+1; 
 
@@ -97,7 +99,7 @@ char* createInode(FILE* disk, char* data) {
             exit(1);
     }
     writeBlock(disk, 1, blocks);
-    free(blocks);
+    free(blocks);*/
     return inode;
 }
 
@@ -123,7 +125,7 @@ int createFile(FILE* disk, char* data) {
 
     //write inode to block
     writeBlock(disk, id, inode);
-
+    /*
     printf("inode is in block: %d", id);
     int* help = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, help);
@@ -133,7 +135,7 @@ int createFile(FILE* disk, char* data) {
 
     //write the data to blocks specified by inode
     
-    /*
+   
     for(int i =0; inode[2+i] != 0 ; i++ ){
             char part[BLOCK_SIZE];
             strncpy(part, data, BLOCK_SIZE);
