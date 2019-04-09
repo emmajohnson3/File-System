@@ -65,15 +65,19 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
 }
 
 char* createInode(FILE* disk, char* data) {
-    int num = 0;
+    char* super = malloc(512);
+    super[0] = 209;
+    super[1] = 2; //super + vector (num blocks)
+    super[3] = 0; //(num inodes)
+    writeBlock(disk, 0, super);
+
+    /*int num = 0;
     int size = strlen(data);//file size
     char* inode = malloc(BLOCK_SIZE);
-    inode[0] = 3;//(char) size;//file size
+    inode[0] = (char) size;//file size
     inode[1] = 0;
-    inode[5] = 3;
-     writeBlock(disk, 10, inode);
     
-    /*
+    
     //calc how many blocks
     num = (size/BLOCK_SIZE)+1; 
 
@@ -101,7 +105,7 @@ char* createInode(FILE* disk, char* data) {
     }
     writeBlock(disk, 1, blocks);
     free(blocks);*/
-    return inode;
+    return super;
 }
 
 //returns the int indentifier of the inode
@@ -146,9 +150,9 @@ int createFile(FILE* disk, char* data) {
             writeBlock(disk, inode[2+i], part);
     }//for
    
-
+    free(blocks);*/
     free(inode);
-    free(blocks); */
+     
     return id;
 }
 
