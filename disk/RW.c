@@ -64,7 +64,7 @@ int getNumBlocks(FILE* disk) {//gets num of blocks being used
     return a;
 }
 
-char* createInode(FILE* disk, char* data) {
+short* createInode(FILE* disk, char* data) {
     short* super = malloc(512);
     int num = 0;
     int size = strlen(data);//file size
@@ -111,7 +111,7 @@ char* createInode(FILE* disk, char* data) {
 int createFile(FILE* disk, char* data) {
     //allocate inode    
     int id = 0;
-    char* inode = createInode(disk,data);
+    short* inode = createInode(disk,data);
     /*
     //find where to put inode
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
