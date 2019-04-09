@@ -121,9 +121,10 @@ int createFile(FILE* disk, char* data) {
 
     //write inode to block
     writeBlock(disk, id, inode);
+    printf("inode is in block: %d", id);
 
     //write the data to blocks specified by inode
-    printf("%s\n",data);
+    //printf("%s\n",data);
     for(int i =0; inode[2+i] != 0 ; i++ ){
             char part[BLOCK_SIZE];
             strncpy(part, data, BLOCK_SIZE);
@@ -159,10 +160,10 @@ char* readFile(FILE* disk, int id) {
     
     for(int i =0; inode[2+i] != 0 ; i++ ){
         readBlock(disk, inode[2+i], block);
-        printf("looking at block: %d\n\n",inode[2+i]);
-        printf("%d: %s\n\n",i,block);
+        //printf("looking at block: %d\n\n",inode[2+i]);
+        //printf("%d: %s\n\n",i,block);
         strcat(content,block);
-        printf("coneccted: %s\n\n",content);
+       //printf("coneccted: %s\n\n",content);
     }//for
 
     free(inode);
