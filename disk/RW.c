@@ -107,13 +107,14 @@ char* createInode(FILE* disk, char* data) {
 //returns the int indentifier of the inode
 int createFile(FILE* disk, char* data) {
     //allocate inode    
+    int id = 0;
     char* inode = createInode(disk,data);
     /*
     //find where to put inode
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);
 
-    int id = 0;
+    
 
     for(int i = 10; i < 209; i++){ //find empty
        if(TestBit(blocks,i) == 0){
