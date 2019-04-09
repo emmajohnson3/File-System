@@ -125,11 +125,11 @@ int createFile(FILE* disk, char* data) {
     //write the data to blocks specified by inode
     printf("%s\n",data);
     for(int i =0; inode[2+i] != 0 ; i++ ){
-            char part[3];
-            strncpy(part, data, 3);
+            char part[BLOCK_SIZE];
+            strncpy(part, data, BLOCK_SIZE);
             printf("%s\n",part);
-            data += 3;
-            //writeBlock(disk, inode[2+i], );
+            data += BLOCK_SIZE;
+            writeBlock(disk, inode[2+i], part);
     }//for
 
     free(inode);
