@@ -145,10 +145,10 @@ int createFile(FILE* disk, char* data) {
             data += BLOCK_SIZE;
             writeBlock(disk, inode[2+i], part);
     }//for
-    */
+   
 
     free(inode);
-    free(blocks);
+    free(blocks); */
     return id;
 }
 
