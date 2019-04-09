@@ -124,7 +124,7 @@ int createFile(FILE* disk, char* data) {
 
     printf("inode is in block: %d", id);
     readBlock(disk, id, blocks);
-    for(int i =0; blocks[2+i] != 0 ; i++ ){
+    for(int i =0; blocks[2+i] < 10 ; i++ ){
           printf("inode: %d       block: %d", inode[2+i],blocks[2+i] );
     }//for
 
