@@ -68,9 +68,9 @@ char* createInode(FILE* disk, char* data) {
     int num = 0;
     int size = strlen(data);//file size
     char* inode = malloc(BLOCK_SIZE);
-    inode[0] = size;//file size
+    inode[0] = (char) size;//file size
     inode[1] = 0;
-
+    printf("size:%d\n", size);
     //calc how many blocks
     num = (size/BLOCK_SIZE)+1; 
 
