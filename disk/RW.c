@@ -85,10 +85,8 @@ short* createInode(FILE* disk, char* data) {
     for(; i < NUM_BLOCKS ; i++){ //find empty
        if(TestBit(blocks,i) == 0){
                //set bit and add to inode block list
-               printf("allocating block:%d\n", i);
                SetBit(blocks,i);
                inode[2+k] = i;
-               printf("confirm block:%d\n", inode[2+k]);
                break;
        }  
     }//for
@@ -125,9 +123,10 @@ int createFile(FILE* disk, char* data) {
     }//for
     
     //write inode to block
+    printf("block 1:%d\n", inode[2]);
+    printf("block 1:%d\n", inode[3]);
     writeBlock(disk, id, inode);
-    
-    printf("inode is in block: %d", id);
+
     int* help = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, help);
     for(int i =0; i< 10 ; i++ ){
