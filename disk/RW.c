@@ -126,10 +126,20 @@ int createFile(FILE* disk, char* data) {
     
     //write inode to block
     writeBlock(disk, id, inode);
+
+
+    printf("inode is in block: %d", id);
+    short* help = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, id, help);
+    for(int i =0; i< 3 ; i++ ){
+          printf("inode: %d       block: %d\n", inode[2+i],help[2+i] );
+    }//for
+
+
     writeBlock(disk, 1, blocks);
     //write the data to blocks specified by inode
     for(int i =0; inode[2+i] != 0 ; i++ ){
-            char part[BLOCK_SIZE];
+            char part[BLOCK_SIZE];                       //may cause problems
             strncpy(part, data, BLOCK_SIZE);
             //printf("%d: %s\n\n\n",i,part);
             data += BLOCK_SIZE;
