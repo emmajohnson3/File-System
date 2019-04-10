@@ -69,8 +69,10 @@ short* createInode(FILE* disk, char* data) {
     int size = strlen(data);//file size
    
     short* inode = malloc(BLOCK_SIZE);
-    inode[0] = (char) size;//file size
+    inode[0] = size;//file size
     inode[1] = 0;
+    inode[2] = 209;
+    inode[3] = 210;
     
      writeBlock(disk, 10, inode);
 
