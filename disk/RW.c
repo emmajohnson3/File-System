@@ -108,12 +108,9 @@ int createFile(FILE* disk, char* data) {
     //allocate inode    
     int id = 0;
     short* inode = createInode(disk,data);
-    /*
     //find where to put inode
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, 1, blocks);
-
-    
+    readBlock(disk, 1, blocks);  
 
     for(int i = 10; i < 209; i++){ //find empty
        if(TestBit(blocks,i) == 0){
@@ -121,7 +118,10 @@ int createFile(FILE* disk, char* data) {
                writeBlock(disk, 1, blocks);
                id = i;
                break;
-       }  
+       }else if(i == 208){
+            printf("Error: out of inode memory");
+            exit(1);
+       }
     }//for
     
     //write inode to block
@@ -145,7 +145,7 @@ int createFile(FILE* disk, char* data) {
             writeBlock(disk, inode[2+i], part);
     }//for
    
-    free(blocks);*/
+    free(blocks);
     free(inode);
      
     return id;
