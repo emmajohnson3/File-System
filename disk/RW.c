@@ -70,9 +70,7 @@ short* createInode(FILE* disk, char* data) {
    
     short* inode = malloc(BLOCK_SIZE);
     inode[0] = size;//file size
-    inode[1] = 209;
-    inode[2] = 209;
-    inode[3] = 210;
+    inode[1] = 0;
     
      writeBlock(disk, 10, inode);
 
@@ -109,7 +107,7 @@ int createFile(FILE* disk, char* data) {
     //allocate inode    
     int id = 0;
     short* inode = createInode(disk,data);
-    /*
+    
     //find where to put inode
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 1, blocks);  
@@ -151,7 +149,7 @@ int createFile(FILE* disk, char* data) {
    
     free(blocks);
     free(inode);
-     */
+     
     return id;
 }
 
