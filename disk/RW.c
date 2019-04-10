@@ -22,7 +22,7 @@ void readBlock(FILE* disk, int blockNum, void* buffer){
 
 void writeBlock(FILE* disk, int blockNum, void* data){
     fseek(disk, blockNum * BLOCK_SIZE, SEEK_SET);
-    fwrite(data, strlen(data), 1, disk); 
+    fwrite(data, BLOCK_SIZE , 1, disk); //strlen(data)
 }
 
 void CreateDisk(FILE* disk){
