@@ -87,7 +87,7 @@ short* createInode(FILE* disk, char* data) {
        if(TestBit(blocks,i) == 0){
                //set bit and add to inode block list
                SetBit(blocks,i);
-               printf("Allocating block: %d\n", i);
+               //printf("Allocating block: %d\n", i);
                inode[2+k] = i;
                break;
        }  
@@ -126,17 +126,17 @@ int createFile(FILE* disk, char* data) {
     
     //write inode to block
     writeBlock(disk, id, inode);
+    writeBlock(disk, 1, blocks);
 
-
-    printf("inode is in block: %d", id);
+    printf("inode is in block: %d\n", id);
     short* help = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, help);
     for(int i =0; i< 3 ; i++ ){
-          printf("inode: %d       block: %d\n", inode[2+i],help[2+i] );
+          printf("inode: %d       block: %d\n\n", inode[2+i],help[2+i] );
     }//for
 
 
-    writeBlock(disk, 1, blocks);
+   
     //write the data to blocks specified by inode
     for(int i =0; inode[2+i] != 0 ; i++ ){
             char part[BLOCK_SIZE];                       //may cause problems
@@ -190,19 +190,25 @@ int main(int argc, char* argv[]) {
     CreateDisk(disk);
     printf("First File\n");
     int file = createFile(disk, "y2apffIWMWnotk8uP0k2KuR0MkDpswtqMEJkGP4TcA1KgAc7d3AfAB78IaRTtNMtobRYefjXl0XzmKcRnvyU9Y006Z1raS0W0sZj8tgHbK4UXfTSpIpcFW3HelloaaaaaaacC5Pobfr9scWZeCgleJamIx4upRyl7Dx10pcKyXAe0N7BjZki6Ve1giPhtUwvItZDPUxs8NAbEoxxosl87aXBT8zCjv7xX6SwDb9s6jXI0fhUQ1o1qfSjGftUmi5mQ4CHcFlBTfhNBOOe3PIPKvaJ5Kwex3U5V25vbhB7ayEtJoHqDBtD70GOqpUfCpN8QazApuJd0301D5Rl0B6NXd54YBlDlI4tgwvqx6aosqZ99WjGaTutg5Ew8IpRn9lMTg9B53AeEcDn9mgQzA4R7rcGO8X189OA5BQH1W0ZWOJ0vGcsXcSXm5GLcAh3IG4P5h8WNYOpmcz14Ezmb2Fnf67RpTBYnI0tz1Mh2hOt04TPswPUDHJpv3z2tu47CNm6UJ5HrRG6nUr1GkaFPt02IOpaepwFqJ4bnVZLxT3fzA0oKaXKvCeMv02dpGMVL6bCFi0wtF4Lo9lHC5A9NqcawYBooop"); 
-     printf("Second File\n");
-    int file2 = createFile(disk, "hello person threre!!!!1");
-     printf("Third File\n");
-    int file3 = createFile(disk, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed diam mi, lobortis vitae ligula non, pharetra blandit turpis. Phasellus lectus nunc, porta in elementum et, ultrices sit amet libero. Nulla ullamcorper nibh urna, sit amet scelerisque erat facilisis et. Phasellus dapibus auctor velit, vel molestie ligula mollis at. Etiam ac dignissim sapien, ut pulvinar odio. Donec ac ornare orci, ac tempus nunc. Morbi sagittis sapien euismod molestie interdum. Suspendisse molestie justo semper, mollis nibh sit amet, malesuada enim. Suspendisse sapien tortor, sodales et dictum vitae, pellentesque vitae ex. Vivamus consectetur vel ante at tincidunt. Aenean efficitur tristique tempus. Pellentesque sollicitudin aliquam mauris. Donec gravida quam non est fermentum blandit ut et ipsum. Etiam ornare et lorem in iaculis. Phasellus id tellus in ligula mattis elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquam in diam eu pharetra. Suspendisse consequat orci leo. Maecenas tincidunt ligula non fermentum elementum. Nunc sit amet finibus risus. Quisque diam erat, posuere in ex sed, maximus tempus nulla. Vestibulum eu laoreet arcu. Etiam at amet.");
-
-    char* buffer = readFile(disk, file);
+    
+        char* buffer = readFile(disk, file);
     printf("File: %s\n\n", buffer);
+
+    
+    printf("Second File\n");
+    int file2 = createFile(disk, "hello person threre!!!!1");
 
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
 
-    buffer = readFile(disk, file3);
+    printf("Third File\n");
+    int file3 = createFile(disk, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed diam mi, lobortis vitae ligula non, pharetra blandit turpis. Phasellus lectus nunc, porta in elementum et, ultrices sit amet libero. Nulla ullamcorper nibh urna, sit amet scelerisque erat facilisis et. Phasellus dapibus auctor velit, vel molestie ligula mollis at. Etiam ac dignissim sapien, ut pulvinar odio. Donec ac ornare orci, ac tempus nunc. Morbi sagittis sapien euismod molestie interdum. Suspendisse molestie justo semper, mollis nibh sit amet, malesuada enim. Suspendisse sapien tortor, sodales et dictum vitae, pellentesque vitae ex. Vivamus consectetur vel ante at tincidunt. Aenean efficitur tristique tempus. Pellentesque sollicitudin aliquam mauris. Donec gravida quam non est fermentum blandit ut et ipsum. Etiam ornare et lorem in iaculis. Phasellus id tellus in ligula mattis elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquam in diam eu pharetra. Suspendisse consequat orci leo. Maecenas tincidunt ligula non fermentum elementum. Nunc sit amet finibus risus. Quisque diam erat, posuere in ex sed, maximus tempus nulla. Vestibulum eu laoreet arcu. Etiam at amet.");
+
+buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
+    
+
+    
 
    //free(buffer);
     printf("done\n");
