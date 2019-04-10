@@ -129,6 +129,7 @@ int createFile(FILE* disk, char* data) {
 
     int* help = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, help);
+    printf("size:%d\n", help[0]);
     for(int i =0; i< 10 ; i++ ){
           printf("inode: %d       block: %d\n", inode[2+i],help[2+i] );
     }//for
