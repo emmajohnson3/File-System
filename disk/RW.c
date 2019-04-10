@@ -145,10 +145,9 @@ char* parse(char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
     char* name = malloc(512 * sizeof(char*));
-        strcpy (name, line);
-    printf("here\n");
+    strcpy (name, line);
+
     token = strtok(name, "/\n");
-    printf("one: %s\n",token);
     int i = 0;
     while (token != NULL) {
         tokens[i] = token;
@@ -164,7 +163,6 @@ char* parse(char* line){
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-        printf("in fuction\n");
         char* name = parse(data);
         printf("name: %s\n",name);
       //  for(int i; tokens[i] != NULL; i++){
@@ -280,7 +278,7 @@ int main(int argc, char* argv[]) {
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
 
-    createDirectory(disk, "mmm");
+    createDirectory(disk, "helo/ddd/mmm");
 
     free(buffer);
     printf("done\n");
