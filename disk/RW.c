@@ -144,8 +144,10 @@ int createFile(FILE* disk, char* data) {
 char* parse(char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
-       printf("here\n");
-    token = strtok(line, "/\n");
+    char* name = malloc(512 * sizeof(char*);
+        strcpy (name, line);
+    printf("here\n");
+    token = strtok(name, "/\n");
     printf("one: %s\n",token);
     int i = 0;
     while (token != NULL) {
