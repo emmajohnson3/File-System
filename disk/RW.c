@@ -206,6 +206,9 @@ int main(int argc, char* argv[]) {
 
 buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
+
+     buffer = readFile(disk, file);
+    printf("File: %s\n\n", buffer);
     
 
     
