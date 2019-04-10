@@ -165,17 +165,19 @@ char* readFile(FILE* disk, int id) {
 
     printf("size:%d\n", inode[0]);
     for(int i =0; i< 3 ; i++ ){
-          printf("inode pointer %d: %d ", i, inode[2+i] );
+          printf("inode pointer %d: %d \n", i, inode[2+i] );
     }//for
+
+    int num = (size/BLOCK_SIZE)+1; 
     
-    /*for(int i =0; inode[2+i] != 0 ; i++ ){
+    for(int i =0; i < num; i++ ){
         readBlock(disk, inode[2+i], block);
-        //printf("looking at block: %d\n\n",inode[2+i]);
-        //printf("%d: %s\n\n",i,block);
+        printf("looking at block: %d\n\n",inode[2+i]);
+        printf("%d: %s\n\n",i,block);
         strcat(content,block);
-       //printf("coneccted: %s\n\n",content);
+        printf("coneccted: %s\n\n",content);
     }//for
-*/
+
     free(inode);
     return content;
 }
