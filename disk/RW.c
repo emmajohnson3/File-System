@@ -159,7 +159,7 @@ char** parse(char* line){
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-        char* name;
+        char* name = malloc(3 * sizeof(char*)) ;
         //parse data
         char** tokens =  parse(data);
         name = tokens[0];
