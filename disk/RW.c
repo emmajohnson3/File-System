@@ -70,7 +70,7 @@ short* createInode(FILE* disk, char* data) {
    
     short* inode = malloc(BLOCK_SIZE);
     inode[0] = size;//file size
-    inode[1] = 0;
+    inode[1] = 209;
     inode[2] = 209;
     inode[3] = 210;
     
