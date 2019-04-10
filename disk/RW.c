@@ -146,6 +146,10 @@ int createFile(FILE* disk, char* data) {
 int createDirectory(FILE* disk, char* name) {
         if(strlen(name)> 3){
            printf("name too large please keep it to 3 char");
+           return -1;
+        }else if(strlen(name)< 3){
+           printf("name should be 3 chars long");
+           return -1;
         }
     //allocate inode 
     int id = 0;   
@@ -175,10 +179,12 @@ int createDirectory(FILE* disk, char* name) {
     //write the name to block 
     char* content = malloc(sizeof(char) * BLOCK_SIZE);
     content [0]= 0;//no files
-    content [1] = name;  
+    content [1] = name[0];  
+    content [2] = name[1]; 
+    content [3] = name[2]; 
     content [4] = 0;  
     writeBlock(disk, inode[2], content);
-    
+
     free(blocks);
     free(inode);
 }
@@ -188,6 +194,10 @@ char* readFile(FILE* disk, int id) {
     short* inode = malloc(sizeof(char) * BLOCK_SIZE);
     char* block = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, inode);
+
+    if(inode[1]== 1){
+         return("this is a directory");
+    }
 
     int size = inode[0]; 
     char* content = malloc(size);
