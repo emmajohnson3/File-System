@@ -141,29 +141,27 @@ int createFile(FILE* disk, char* data) {
     return id;
 }
 
-char** parse(char* line){
+char* parse(char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
     token = strtok(line, "/\n");
     int i = 0;
     while (token != NULL) {
         tokens[i] = token;
+        printf("token: %s\n",tokens[i]);
         i++;
         token = strtok(NULL, "/\n");
     }
     
     tokens[i] = NULL;
-    return(tokens);
+    return(tokens[i-1]);
 }
 
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-        char* name = malloc(3 * sizeof(char*)) ;
-        //parse data
-        char** tokens =  parse(data);
-        name = tokens[0];
-        printf("name: %s",name);
+        char* name = parse(data);
+        printf("name: %s\n",name);
       //  for(int i; tokens[i] != NULL; i++){
         //        name,tokens;
          //       printf("token %d: %s",i,tokens[i]);     
