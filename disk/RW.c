@@ -163,19 +163,11 @@ char* readFile(FILE* disk, int id) {
     int size = inode[0]; 
     char* content = malloc(size);
 
-    printf("size:%d\n", inode[0]);
-    for(int i =0; i< 3 ; i++ ){
-          printf("inode pointer %d: %d \n", i, inode[2+i] );
-    }//for
-
     int num = (size/BLOCK_SIZE)+1; 
     
     for(int i =0; i < num; i++ ){
         readBlock(disk, inode[2+i], block);
-        printf("looking at block: %d\n\n",inode[2+i]);
-        printf("%d: %s\n\n",i,block);
         strcat(content,block);
-        printf("coneccted: %s\n\n",content);
     }//for
 
     free(inode);
@@ -187,9 +179,9 @@ FILE* disk = fopen("vdisk", "w+b");
     //DeleteDisk();
     CreateDisk(disk);
 
-    int file = createFile(disk, "y2apffIWMWnotk8uP0k2KuR0MkDpswtqMEJkGP4TcA1KgAc7d3AfAB78IaRTtNMtobRYefjXl0XzmKcRnvyU9Y006Z1raS0W0sZj8tgHbK4UXfTSpIpcFW3KGBIhduHicC5Pobfr9scWZeCgleJamIx4upRyl7Dx10pcKyXAe0N7BjZki6Ve1giPhtUwvItZDPUxs8NAbEoxxosl87aXBT8zCjv7xX6SwDb9s6jXI0fhUQ1o1qfSjGftUmi5mQ4CHcFlBTfhNBOOe3PIPKvaJ5Kwex3U5V25vbhB7ayEtJoHqDBtD70GOqpUfCpN8QazApuJd0301D5Rl0B6NXd54YBlDlI4tgwvqx6aosqZ99WjGaTutg5Ew8IpRn9lMTg9B53AeEcDn9mgQzA4R7rcGO8X189OA5BQH1W0ZWOJ0vGcsXcSXm5GLcAh3IG4P5h8WNYOpmcz14Ezmb2Fnf67RpTBYnI0tz1Mh2hOt04TPswPUDHJpv3z2tu47CNm6UJ5HrRG6nUr1GkaFPt02IOpaepwFqJ4bnVZLxT3fzA0oKaXKvCeMv02dpGMVL6bCFi0wtF4Lo9lHC5A9NqcawYC4UK"); 
+    int file = createFile(disk, "y2apffIWMWnotk8uP0k2KuR0MkDpswtqMEJkGP4TcA1KgAc7d3AfAB78IaRTtNMtobRYefjXl0XzmKcRnvyU9Y006Z1raS0W0sZj8tgHbK4UXfTSpIpcFW3HelloaaaaaaacC5Pobfr9scWZeCgleJamIx4upRyl7Dx10pcKyXAe0N7BjZki6Ve1giPhtUwvItZDPUxs8NAbEoxxosl87aXBT8zCjv7xX6SwDb9s6jXI0fhUQ1o1qfSjGftUmi5mQ4CHcFlBTfhNBOOe3PIPKvaJ5Kwex3U5V25vbhB7ayEtJoHqDBtD70GOqpUfCpN8QazApuJd0301D5Rl0B6NXd54YBlDlI4tgwvqx6aosqZ99WjGaTutg5Ew8IpRn9lMTg9B53AeEcDn9mgQzA4R7rcGO8X189OA5BQH1W0ZWOJ0vGcsXcSXm5GLcAh3IG4P5h8WNYOpmcz14Ezmb2Fnf67RpTBYnI0tz1Mh2hOt04TPswPUDHJpv3z2tu47CNm6UJ5HrRG6nUr1GkaFPt02IOpaepwFqJ4bnVZLxT3fzA0oKaXKvCeMv02dpGMVL6bCFi0wtF4Lo9lHC5A9NqcawYBooop"); 
     char* buffer = readFile(disk, file);
-    //printf("%s\n", buffer);
+    printf("File: %s\n", buffer);
 
    //free(buffer);
     printf("done\n");
