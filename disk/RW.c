@@ -125,17 +125,7 @@ int createFile(FILE* disk, char* data) {
     }//for
     
     //write inode to block
-    printf("block 1:%d\n", inode[2]);
-    printf("block 1:%d\n", inode[3]);
     writeBlock(disk, id, inode);
-
-    int* help = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, id, help);
-    printf("size:%d\n", help[0]);
-    for(int i =0; i< 10 ; i++ ){
-          printf("inode: %d       block: %d\n", inode[2+i],help[2+i] );
-    }//for
-
     //write the data to blocks specified by inode
     
    
@@ -166,21 +156,26 @@ int createDirectory(FILE* disk, char* data) {
 
 //read file given inode #, returns char *
 char* readFile(FILE* disk, int id) {
-    char* inode = malloc(sizeof(char) * BLOCK_SIZE);
+    short* inode = malloc(sizeof(char) * BLOCK_SIZE);
     char* block = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, id, inode);
 
     int size = inode[0]; 
     char* content = malloc(size);
+
+    printf("size:%d\n", inode[0]);
+    for(int i =0; i< 3 ; i++ ){
+          printf("inode pointer %d: %d ", i, inode[2+i] );
+    }//for
     
-    for(int i =0; inode[2+i] != 0 ; i++ ){
+    /*for(int i =0; inode[2+i] != 0 ; i++ ){
         readBlock(disk, inode[2+i], block);
         //printf("looking at block: %d\n\n",inode[2+i]);
         //printf("%d: %s\n\n",i,block);
         strcat(content,block);
        //printf("coneccted: %s\n\n",content);
     }//for
-
+*/
     free(inode);
     return content;
 }
