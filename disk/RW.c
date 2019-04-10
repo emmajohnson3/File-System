@@ -71,8 +71,6 @@ short* createInode(FILE* disk, char* data) {
     short* inode = malloc(BLOCK_SIZE);
     inode[0] = size;//file size
     inode[1] = 0;
-    
-     writeBlock(disk, 10, inode);
 
     //calc how many blocks
     num = (size/BLOCK_SIZE)+1; 
@@ -204,7 +202,7 @@ int main(int argc, char* argv[]) {
     printf("Third File\n");
     int file3 = createFile(disk, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed diam mi, lobortis vitae ligula non, pharetra blandit turpis. Phasellus lectus nunc, porta in elementum et, ultrices sit amet libero. Nulla ullamcorper nibh urna, sit amet scelerisque erat facilisis et. Phasellus dapibus auctor velit, vel molestie ligula mollis at. Etiam ac dignissim sapien, ut pulvinar odio. Donec ac ornare orci, ac tempus nunc. Morbi sagittis sapien euismod molestie interdum. Suspendisse molestie justo semper, mollis nibh sit amet, malesuada enim. Suspendisse sapien tortor, sodales et dictum vitae, pellentesque vitae ex. Vivamus consectetur vel ante at tincidunt. Aenean efficitur tristique tempus. Pellentesque sollicitudin aliquam mauris. Donec gravida quam non est fermentum blandit ut et ipsum. Etiam ornare et lorem in iaculis. Phasellus id tellus in ligula mattis elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquam in diam eu pharetra. Suspendisse consequat orci leo. Maecenas tincidunt ligula non fermentum elementum. Nunc sit amet finibus risus. Quisque diam erat, posuere in ex sed, maximus tempus nulla. Vestibulum eu laoreet arcu. Etiam at amet.");
 
-buffer = readFile(disk, file3);
+     buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
 
      buffer = readFile(disk, file);
