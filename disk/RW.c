@@ -407,6 +407,7 @@ int createFile(FILE* disk, char* filePath, char* data) {
 
         //add directory to its  ***********
     if( strcmp(tokens[0], "root") == 0 || strcmp(tokens[0], "hom") == 0){//put in root
+        printf("adding file to home");
        addEntry( disk,2,  strID, id);
     }else{
         short cur =  2;
@@ -493,28 +494,14 @@ int main(int argc, char* argv[]) {
     createDirectory(disk, "par");
 
     int file = createFile(disk, "par","blah blah blah"); 
-    int file2 = createFile(disk, "root","hello person threre!!!!1");
-    createDirectory(disk, "qqq");
+
     createDirectory(disk, "par/sub");
 
     ReadDirectory(disk, "par");
-    ReadDirectory(disk, "par/sub");
-   
     ReadDirectory(disk, "root");
     printf("\n\n");
 
-   // deleteDirectory(disk,"qqq");
-    ReadDirectory(disk, "root");
-    //ReadDirectory(disk, "par");
-
-    /*
-    char* buffer = readFile(disk, file);
-    printf("File: %s\n\n", buffer);
-
-    buffer = readFile(disk, file2);
-    printf("File 2: %s\n\n", buffer);
-
-    free(buffer);*/
+    //free(buffer);
     printf("done\n");
 
     fclose(disk);
