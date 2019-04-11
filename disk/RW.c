@@ -231,7 +231,7 @@ int createDirectory(FILE* disk, char* data) {
     }else{
         int cur =  2;
         int time = 0;
-        while(time < len){
+        while(time < len - 1){
               char* path = tokens[time];
               printf("looking at inode %d\n" ,cur);
               printf("looking for %s\n" ,path);
