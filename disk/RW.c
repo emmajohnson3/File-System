@@ -162,12 +162,12 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         root[2+num] = name[1]; 
         root[3+num] = name[2];
         writeBlock(disk, dirNum, root);
-
+/*
         readBlock(disk, 2, root);
         printf("%s", root[1+num]);
         printf("%s", root[2+num]);
         printf("%s", root[3+num]);
-
+*/
         free(root);
 }
 
@@ -339,6 +339,13 @@ int main(int argc, char* argv[]) {
     createDirectory(disk, "ddd");
     printf("dir 2\n");
     createDirectory(disk, "ddd/mmm");
+
+     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 2, buffer);
+    //printf("%s", buffer);
+    for (int i = 0; i < BLOCK_SIZE; i++){
+        printf("%2x ", buffer[i]);
+    }
 
     //free(buffer);
     printf("done\n");
