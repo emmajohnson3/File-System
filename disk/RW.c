@@ -155,12 +155,12 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         char* root = malloc(512);
         readBlock(disk, 2, root);  
         int num = root[0];
+        root[0] = num +1;
         num = ((num+1) * 4);
         root[0+num] = node;
         root[1+num] = name[0];
         root[2+num] = name[1]; 
         root[3+num] = name[2];
-        root[0]= root[0]+1;
         writeBlock(disk, dirNum, root);
         free(root);
 }
@@ -237,9 +237,9 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < dir[0]; i++){
                       int num = ((i+1)* 4);
                         //root[0+num] = node;
-                        printf("char 1: %d\n",dir[1+num]);
-                        printf("char 2: %d\n",dir[2+num]);
-                        printf("char 3: %d\n",dir[3+num]);
+                        printf("char 1 in %d: %d\n",dir[1+num],1+num);
+                        printf("char 2 in %d: %d\n",dir[2+num],2+num);
+                        printf("char 3 in %d: %d\n",dir[3+num],3+num);
               }   
               break;
 
