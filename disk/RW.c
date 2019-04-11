@@ -272,7 +272,7 @@ char* readFile(FILE* disk, int id) {
 int main(int argc, char* argv[]) {
   FILE* disk = fopen("vdisk", "w+b");
     //DeleteDisk();
-    CreateDisk(disk);
+    //CreateDisk(disk);
 
     /*
     printf("First File\n");
