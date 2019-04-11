@@ -210,8 +210,10 @@ void ReadDirectory(FILE* disk, char* data) {
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
+                                 printf("looking at node %d \n", node);
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
+                                 printf("directory is in %d \n", cur);
                                  readBlock(disk, cur, dir);
                                 break;
                         }else if(i = files -1){
@@ -387,16 +389,12 @@ int main(int argc, char* argv[]) {
 
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
-*/
-   printf("dir 1\n");   
+*/   
     createDirectory(disk, "par");
-    printf("dir 2\n");
     createDirectory(disk, "par/sub");
-    printf("dir 2\n");
     createDirectory(disk, "qqq");
 
-    ReadDirectory(disk, "root");
-    ReadDirectory(disk, "par");
+    ReadDirectory(disk, "par/sub");
 
 
     //free(buffer);
