@@ -207,7 +207,8 @@ void ReadDirectory(FILE* disk, char* data) {
               int files = dir[0]; 
               printf("num files: %d\n", files);
               for(int i = 0; i < files; i++){ //find dir in parent
-                      int num = ((i+1)* 4);
+              printf("looped\n", );
+                        int num = ((i+1)* 4);
                         int node = dir[0+num];
                         printf(" %c ? %c \n", dir[1+num],path[0]);
                         printf(" %c ? %c \n", dir[2+num],path[1]);
@@ -221,6 +222,7 @@ void ReadDirectory(FILE* disk, char* data) {
                                  readBlock(disk, cur, dir);
                                 break;
                         }else if(i = files -1){
+                                printf("i:\n", i);
                                 printf("file %s could not be found in path\n", path);
                                 exit(1);
                         } 
