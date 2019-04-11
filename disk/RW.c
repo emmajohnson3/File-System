@@ -146,8 +146,9 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         } 
               } //for
        
-        writeBlock(disk, dirNum, dir);
+        writeBlock(disk, dirNum, newDir);
         free(dir);
+        free(newDir);
 }
 
 char** parse(FILE* disk,char* line){
