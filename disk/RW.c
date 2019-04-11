@@ -304,11 +304,7 @@ int createDirectory(FILE* disk, char* data) {
               } //for
               time++;
         } //while
-         printf("before entry\n");
-         ReadDirectory(disk, "par");
         addEntry( disk,cur, name, id);
-         printf("after entry\n");
-         ReadDirectory(disk, "par");
     }//else
 
     //write inode to block
@@ -393,12 +389,11 @@ int main(int argc, char* argv[]) {
     printf("File 2: %s\n\n", buffer);
 */   
     createDirectory(disk, "par");
-     printf("\n\n\n\n");
     createDirectory(disk, "par/sub");
+    createDirectory(disk, "qqq");
 
     ReadDirectory(disk, "par");
-    //ReadDirectory(disk, "par/sub");
-
+    ReadDirectory(disk, "par/sub");
 
     //free(buffer);
     printf("done\n");
