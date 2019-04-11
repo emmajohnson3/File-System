@@ -248,10 +248,10 @@ void deleteDirectory(FILE* disk, char* data) {
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
                         int num = ((i+1)* 4);
-                        parID = id;
-                        id = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
+                                 parID = id;
+                                 id = dir[0+num];
                                   printf("it is the %d file\n",  i);
                                   printf("parent is in %d\n",  parID);
                                   printf("my is in %d\n",  id);
