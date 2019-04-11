@@ -160,6 +160,7 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         root[1+num] = name[0];
         root[2+num] = name[1]; 
         root[3+num] = name[2];
+        root[0]= root[0]+1;
         writeBlock(disk, dirNum, root);
         free(root);
 }
@@ -230,7 +231,7 @@ int createDirectory(FILE* disk, char* data) {
     }else{
         int cur =  2;
         while(1){
-                printf("looking at inode %d\n" ,cur);
+              printf("looking at inode %d\n" ,cur);
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir); 
               for(int i = 0; i < dir[0]; i++){
@@ -240,6 +241,7 @@ int createDirectory(FILE* disk, char* data) {
                         printf("char 2: %d\n",dir[2+num]);
                         printf("char 3: %d\n",dir[3+num]);
               }   
+              break;
 
         } //while
     }
