@@ -411,6 +411,9 @@ int main(int argc, char* argv[]) {
 
     ReadDirectory(disk, "par");
     ReadDirectory(disk, "par/sub");
+   
+    printf("\n\n");
+    ReadDirectory(disk, "root");
 
     char* buffer = readFile(disk, file);
     printf("File: %s\n\n", buffer);
