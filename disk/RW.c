@@ -46,7 +46,7 @@ void CreateDisk(FILE* disk){
     for(int i = 0; i < 9; i++){  //then next 200 are for i nodes
         SetBit(block,i);
     }
-    //set root directory
+   /* //set root directory
     char* root = malloc(512);
     root[0] = 0;
     root[1] = 'h';
@@ -57,7 +57,7 @@ void CreateDisk(FILE* disk){
     writeBlock(disk, 1, block);
     free(block);
     free(super);
-    free(root);
+    free(root);*/
 }
 
 void DeleteDisk(){
@@ -272,7 +272,7 @@ char* readFile(FILE* disk, int id) {
 int main(int argc, char* argv[]) {
   FILE* disk = fopen("vdisk", "w+b");
     //DeleteDisk();
-    //CreateDisk(disk);
+    CreateDisk(disk);
 
     /*
     printf("First File\n");
