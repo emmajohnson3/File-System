@@ -192,7 +192,7 @@ char** parse(FILE* disk,char* line){
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-       
+ /*      
        //char** tokens = parse(disk,data);  
         char* name = "aaa"; //change later
 
@@ -241,7 +241,8 @@ int createDirectory(FILE* disk, char* data) {
     writeBlock(disk, inode[2], content);
 
     //free(blocks);
-    //free(inode);
+    //free(inode);*/
+    return 1;
 }
 
 //read file given inode #, returns char *
