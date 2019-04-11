@@ -202,12 +202,15 @@ void ReadDirectory(FILE* disk, char* data) {
         int time = 0;
         while(time < len){
               char* path = tokens[time];
-                printf("looking for %s in %d\n",path, cur);
+              printf("looking for %s in %d\n",path, cur);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
+                        printf(" %c ? %c \n", dir[1+num],path[0]);
+                        printf(" %c ? %c \n", dir[2+num],path[1]);
+                        printf(" %c ? %c \n", dir[3+num],path[2]);
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
                                  printf("looking at node %d \n", node);
