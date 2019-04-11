@@ -137,6 +137,7 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //delete num - (num+3)
+                                 printf("found!!!!!");
                                  strcpy(newDir, dir);
                                  strcpy (dir + num, newDir + num + 4);
                                 break;
@@ -268,8 +269,9 @@ void deleteDirectory(FILE* disk, char* data) {
      printf("file is in %d\n", contentBlock);
 
      //delete from parent
-      readBlock(disk, parID,  dirInode);
+      readBlock(disk, parID, dirInode);
       cur = dirInode[2];
+      printf("parent is in %d\n", cur);
       deleteEntry( disk,cur, name);
 
     //unset vector bit of inode and content
