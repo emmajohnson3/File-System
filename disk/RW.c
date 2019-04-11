@@ -413,7 +413,7 @@ int createFile(FILE* disk, char* filePath, char* data) {
         int time = 0;
         while(time < len - 1){
               char* path = tokens[time];
-
+               printf("in dir block cur %d:\n", cur);
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir);
@@ -423,6 +423,7 @@ int createFile(FILE* disk, char* filePath, char* data) {
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
+                                 printf("found path %s:\n", path);
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
                                  readBlock(disk, cur, dir);
