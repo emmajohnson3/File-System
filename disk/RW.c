@@ -376,12 +376,9 @@ int createDirectory(FILE* disk, char* data) {
 
 //returns the int indentifier of the inode
 int createFile(FILE* disk, char* filePath, char* data) {
-        //put in dir
-         
         char** tokens = parse(disk,filePath);  
         int len;
         for(len = 0; tokens[len] != NULL;len++){ } 
-       
 
     //allocate inode    
     int id = 0;
@@ -410,9 +407,10 @@ int createFile(FILE* disk, char* filePath, char* data) {
         printf("adding file to home");
        addEntry( disk,2,  strID, id);
     }else{
+        printf(" not adding file to home");
         short cur =  2;
         int time = 0;
-        while(time < len - 1){
+        while(time < len){
               char* path = tokens[time];
                printf("in dir block cur %d:\n", cur);
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
