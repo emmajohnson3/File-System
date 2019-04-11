@@ -292,7 +292,7 @@ int main(int argc, char* argv[]) {
 
  buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
-  */
+ 
  
       
     printf("First File\n");
@@ -313,7 +313,7 @@ int main(int argc, char* argv[]) {
 
     free(buffer);
     printf("done\n");
-
+ */
     fclose(disk);
     return 0;
 }
