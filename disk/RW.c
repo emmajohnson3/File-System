@@ -243,10 +243,16 @@ int createDirectory(FILE* disk, char* data) {
               int files = dir[0]; 
               for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
+                      /*
                         //root[0+num] = node;
                         printf("char 1 in %d: %d\n",dir[1+num],1+num);
                         printf("char 2 in %d: %d\n",dir[2+num],2+num);
                         printf("char 3 in %d: %d\n",dir[3+num],3+num);
+                        */
+                        printf("reading dir\n");
+                        char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
+                        readBlock(disk, 2, buffer);
+                        printf("%s", buffer);
               }   
               break;
 
@@ -340,9 +346,6 @@ int main(int argc, char* argv[]) {
     printf("dir 2\n");
     createDirectory(disk, "ddd/mmm");
 
-     char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, 2, buffer);
-    printf("%s", buffer);
 
     //free(buffer);
     printf("done\n");
