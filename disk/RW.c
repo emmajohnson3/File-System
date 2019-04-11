@@ -127,7 +127,6 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
 // deleteEntry( disk,cur, name);
 void deleteEntry(FILE* disk,int dirNum,char* path){
         char* dir = malloc(512);
-        char* newDir = malloc(512);
         readBlock(disk, dirNum, dir);  
         int num = dir[0];
         int start =0;
@@ -153,9 +152,8 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         } 
               } //for
 
-        writeBlock(disk, dirNum, newDir);
+        writeBlock(disk, dirNum, dir);
         free(dir);
-        free(newDir);
 }
 
 char** parse(FILE* disk,char* line){
