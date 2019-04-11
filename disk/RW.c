@@ -145,7 +145,10 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                                 exit(1); 
                         } 
               } //for
-       
+
+        printf("old: \n%s\n", dir);
+        printf("new: \n%s\n", newDir);
+
         writeBlock(disk, dirNum, newDir);
         free(dir);
         free(newDir);
