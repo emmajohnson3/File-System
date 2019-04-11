@@ -46,8 +46,18 @@ void CreateDisk(FILE* disk){
     for(int i = 0; i < 9; i++){  //then next 200 are for i nodes
         SetBit(block,i);
     }
+    //set root directory
+    char* root = malloc(512);
+    super[0] = 0;
+    super[1] = 'h';
+    super[2] = 'o'; 
+    super[3] = 'm'; 
+
+    writeBlock(disk, 2, root);
     writeBlock(disk, 1, block);
     free(block);
+    free(super);
+    free(root);
 }
 
 void DeleteDisk(){
@@ -141,7 +151,7 @@ int createFile(FILE* disk, char* data) {
     return id;
 }
 
-char* parse(char* line){
+char** parse(FILE* disk,char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
     char* name = malloc(512 * sizeof(char*));
@@ -156,25 +166,27 @@ char* parse(char* line){
         token = strtok(NULL, "/\n");
     }
     
+    //add directory to its parent
     tokens[i] = NULL;
-    return(tokens[i-1]);
+        free(name);
+    return(tokens);
 }
 
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-        char* name = parse(data);
-        printf("name: %s\n",name);
-      //  for(int i; tokens[i] != NULL; i++){
-        //        name,tokens;
-         //       printf("token %d: %s",i,tokens[i]);     
-        //}//for
-
+        char** tokens = parse(disk,data);
+        char* name = malloc(sizeof(char) * 4);
+        printf("here\n");
+        for(int i = 0; tokens[i] != NULL){
+             strcpy (name, tokens[i]);
+        }
+printf("name: %s\n",name);
         if(strlen(name)> 3){
-           printf("name too large please keep it to 3 char");
+           printf("name too large please keep it to 3 char\n");
            return -1;
         }else if(strlen(name)< 3){
-           printf("name should be 3 chars long");
+           printf("name should be 3 chars long\n");
            return -1;
         }
     //allocate inode 
@@ -278,7 +290,8 @@ int main(int argc, char* argv[]) {
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
 
-    createDirectory(disk, "helo/ddd/mmm");
+    createDirectory(disk, "ddd");
+    createDirectory(disk, "ddd/mmm");
 
     free(buffer);
     printf("done\n");
