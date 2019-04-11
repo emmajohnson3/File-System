@@ -179,12 +179,6 @@ char** parse(FILE* disk,char* line){
         token = strtok(NULL, "/\n");
     }
      tokens[i] = NULL;
-    
-    //add directory to its parent
-    //if(i == 1){//put in root
-     //   addEntry( disk,2, tokens[0], int node);
-      //  return(tokens[0]);
-    //}
 
     return(tokens);
 }
@@ -195,8 +189,9 @@ int createDirectory(FILE* disk, char* data) {
        
         char** tokens = parse(disk,data);  
         char* name;
-        for(int i =0; tokens[i] != NULL;i++){
-                name = tokens[i];
+        int len;
+        for(len = 0; tokens[len] != NULL;i++){
+                name = tokens[len];
         } 
 
         if(strlen(name)> 3){
@@ -229,6 +224,26 @@ int createDirectory(FILE* disk, char* data) {
        }
     }//for
 
+    //add directory to its parent
+    if( len == 1){//put in root
+       addEntry( disk,2, tokens[0], id);
+    }else{
+        int cur =  2;
+        while(1){
+                printf("looking at inode %d\n" ,cur);
+              int* dir = malloc(sizeof(char) * BLOCK_SIZE);
+              readBlock(disk, cur, dir); 
+              for(int i = 0; i < dir[0]; i++){
+                      int num = ((i+1)* 4);
+                        //root[0+num] = node;
+                        printf("char 1: %s\n",dir[1+num]);
+                        printf("char 2: %s\n",dir[2+num]);
+                        printf("char 3: %s\n",dir[3+num]);
+              }   
+
+        } //while
+    }
+
     printf("directory is in inode %d\n" ,id);
     //write inode to block
     writeBlock(disk, id, inode);
@@ -243,8 +258,8 @@ int createDirectory(FILE* disk, char* data) {
     content [4] = 0;  
     writeBlock(disk, inode[2], content);
 
-    //free(blocks);
-    //free(inode);
+    free(blocks);
+    free(inode);
     return id;
 }
 
@@ -296,7 +311,7 @@ int main(int argc, char* argv[]) {
  buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
  
-  */
+  
       
     printf("First File\n");
     int file = createFile(disk, "blah blah blah"); 
@@ -310,11 +325,13 @@ int main(int argc, char* argv[]) {
 
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
-
+*/
+       printf("dir 1\n");   
     createDirectory(disk, "ddd");
+    printf("dir 2\n");
     createDirectory(disk, "ddd/mmm");
 
-    free(buffer);
+    //free(buffer);
     printf("done\n");
 
     fclose(disk);
