@@ -252,9 +252,8 @@ void deleteDirectory(FILE* disk, char* data) {
                         id = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
-                                 readBlock(disk, id,  dirInode);
-                                 cur = dirInode[2];
-                                 readBlock(disk, cur, dir);
+                                  printf("parent is in %d\n",  parID);
+                                  printf("my is in %d\n",  id);
                                 break;
                         }else if(i == files -1){
                                 printf("file %s could not be found in path\n", path);
@@ -266,16 +265,16 @@ void deleteDirectory(FILE* disk, char* data) {
      //get id of files content block for unset   
      readBlock(disk, id, dirInode);
      contentBlock = dirInode[2];
-     printf("file is in %d\n", contentBlock);
+     printf("file content is in %d\n", contentBlock);
 
      //delete from parent
      if(parID == 2){
-             printf("parent is in %d\n", 2);
+             printf("deleting from: %d\n", 2);
         deleteEntry( disk,2, name);
      }else{
       readBlock(disk, parID, dirInode);
       cur = dirInode[2];
-      printf("parent is in %d\n", cur);
+       printf("deleting from: %d\n", cur);
       deleteEntry( disk,cur, name);
      }
 
