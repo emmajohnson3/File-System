@@ -184,6 +184,56 @@ char** parse(FILE* disk,char* line){
     return(tokens);
 }
 
+int ReadDirectory(FILE* disk, char* data) {
+       
+        char** tokens = parse(disk,data);  
+        char* name;
+        int len;
+        for(len = 0; tokens[len] != NULL;len++){
+                name = tokens[len];
+        } 
+
+    //find directory
+    char* dir = malloc(sizeof(char) * BLOCK_SIZE);
+    short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
+    if( len == 1){//put in root
+        readBlock(disk, 2, dir);
+    }else{
+        short cur =  2;
+        int time = 0;
+        while(time < len - 1){
+              char* path = tokens[time];
+              readBlock(disk, cur, dir);
+              int files = dir[0]; 
+              for(int i = 0; i < files; i++){ //find dir in parent
+                      int num = ((i+1)* 4);
+                        int node = dir[0+num];
+                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
+                                 //get content block from inode
+                                 readBlock(disk, node,  dirInode);
+                                 cur = dirInode[2];
+                                 readBlock(disk, cur, dir);
+                                break;
+                        }else if(i = files -1){
+                                printf("file %s could not be found in path", path);
+                                exit(1);
+                        } 
+              } //for
+              time++;
+        } //while
+    }//else
+
+    //parse dir
+    printf("# of files in %s\n", dir[0], name);
+     printf("File list:\n");
+    for(int i = 0 ; i <  dir[0]; i++){
+             int num = ((i+1)* 4);
+             int node = dir[0+num];
+             printf("%c%c%c\n",dir[1+num],dir[2+num],dir[3+num]);
+    }
+
+}
+
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
@@ -228,14 +278,11 @@ int createDirectory(FILE* disk, char* data) {
     //add directory to its parent
     if( len == 1){//put in root
        addEntry( disk,2, tokens[0], id);
-        printf("directory added to root\n");
     }else{
         short cur =  2;
         int time = 0;
         while(time < len - 1){
               char* path = tokens[time];
-              printf("looking at inode %d\n" ,cur);
-              printf("looking for %s\n" ,path);
 
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
@@ -244,11 +291,7 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
-                        printf("%c compared to %c: \n",dir[1+num],path[0]);
-                        printf("%c compared to %c: \n",dir[2+num],path[1]);
-                        printf("%c compared to %c: \n",dir[3+num],path[2]);
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
-                                 printf("found inode: %d\n",node);
                                  //get content block from inode
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
@@ -261,7 +304,6 @@ int createDirectory(FILE* disk, char* data) {
               } //for
               time++;
         } //while
-        printf("parent directory is in : %d\n",cur);
         addEntry( disk,cur, name, id);
     }//else
 
