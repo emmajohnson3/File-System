@@ -46,13 +46,13 @@ void CreateDisk(FILE* disk){
     for(int i = 0; i < 9; i++){  //then next 200 are for i nodes
         SetBit(block,i);
     }
-   /* //set root directory
+   //set root directory
     char* root = malloc(512);
     root[0] = 0;
     root[1] = 'h';
     root[2] = 'o'; 
     root[3] = 'm'; 
-
+/* 
     writeBlock(disk, 2, root);
     writeBlock(disk, 1, block);
     free(block);
