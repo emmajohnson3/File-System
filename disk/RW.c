@@ -184,7 +184,7 @@ char** parse(FILE* disk,char* line){
     return(tokens);
 }
 
-int ReadDirectory(FILE* disk, char* data) {
+void ReadDirectory(FILE* disk, char* data) {
        
         char** tokens = parse(disk,data);  
         char* name;
@@ -196,13 +196,14 @@ int ReadDirectory(FILE* disk, char* data) {
     //find directory
     char* dir = malloc(sizeof(char) * BLOCK_SIZE);
     short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
-    if( len == 1){//put in root
+    if(strcmp(name, "root") == 0 || strcmp(name, "hom") == 0){//put in root
         readBlock(disk, 2, dir);
     }else{
         short cur =  2;
         int time = 0;
-        while(time < len - 1){
+        while(time < len){
               char* path = tokens[time];
+                printf("looking for %s in %d",path, cur);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
@@ -224,7 +225,7 @@ int ReadDirectory(FILE* disk, char* data) {
     }//else
 
     //parse dir
-    printf("# of files in %s\n", dir[0], name);
+    printf("# of files in %s: %d\n",name, dir[0]);
      printf("File list:\n");
     for(int i = 0 ; i <  dir[0]; i++){
              int num = ((i+1)* 4);
@@ -394,6 +395,8 @@ int main(int argc, char* argv[]) {
     createDirectory(disk, "par/sub");
     printf("dir 2\n");
     createDirectory(disk, "qqq");
+
+    ReadDirectory(disk, "par/sub");
 
 
     //free(buffer);
