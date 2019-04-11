@@ -110,88 +110,6 @@ short* createInode(FILE* disk, char* data) {
     free(blocks);
     return inode;
 }
-
-//returns the int indentifier of the inode
-int createFile(FILE* disk, char* filePath, char* data) {
-        //put in dir
-         
-        char** tokens = parse(disk,filePath);  
-        int len;
-        for(len = 0; tokens[len] != NULL;len++){ } 
-       
-
-    //allocate inode    
-    int id = 0;
-    short* inode = createInode(disk,data);
-    
-    //find where to put inode
-    int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
-    readBlock(disk, 1, blocks);  
-
-    for(int i = 10; i < 209; i++){ //find empty
-       if(TestBit(blocks,i) == 0){
-               SetBit(blocks,i);
-               id = i;
-               break;
-       }else if(i == 208){
-            printf("Error: out of inode memory");
-            exit(1);
-       }
-    }//for
-
-    char strID[4];
-    sprintf(strID, "%d", id);
-
-        //add directory to its  ***********
-    if( strcmp(tokens[0], "root") == 0 || strcmp(tokens[0], "hom") == 0){//put in root
-       addEntry( disk,2,  strID, id);
-    }else{
-        short cur =  2;
-        int time = 0;
-        while(time < len - 1){
-              char* path = tokens[time];
-
-              char* dir = malloc(sizeof(char) * BLOCK_SIZE);
-              short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
-              readBlock(disk, cur, dir);
-              int files = dir[0]; 
-              for(int i = 0; i < files; i++){ //find dir in parent
-                      int num = ((i+1)* 4);
-                        int node = dir[0+num];
-                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
-                                 //get content block from inode
-                                 readBlock(disk, node,  dirInode);
-                                 cur = dirInode[2];
-                                 readBlock(disk, cur, dir);
-                                break;
-                        }else if(i == files -1){
-                                printf("file %s could not be found in path", path);
-                                exit(1);
-                        } 
-              } //for
-              time++;
-        } //while
-        addEntry( disk,cur, strID, id);
-    }//else             *******************
-    
-    //write inode to block
-    writeBlock(disk, id, inode);
-    writeBlock(disk, 1, blocks);
-
-    //write the data to blocks specified by inode
-    for(int i =0; inode[2+i] != 0 ; i++ ){
-            char part[BLOCK_SIZE];                       //may cause problems
-            strncpy(part, data, BLOCK_SIZE);
-            //printf("%d: %s\n\n\n",i,part);
-            data += BLOCK_SIZE;
-            writeBlock(disk, inode[2+i], part);
-    }//for
-   
-    free(blocks);
-    free(inode);
-     
-    return id;
-}
                               //2                 //id
 void addEntry(FILE* disk,int dirNum,char* name, int node){
         char* root = malloc(512);
@@ -364,6 +282,88 @@ int createDirectory(FILE* disk, char* data) {
 
     free(blocks);
     free(inode);
+    return id;
+}
+
+//returns the int indentifier of the inode
+int createFile(FILE* disk, char* filePath, char* data) {
+        //put in dir
+         
+        char** tokens = parse(disk,filePath);  
+        int len;
+        for(len = 0; tokens[len] != NULL;len++){ } 
+       
+
+    //allocate inode    
+    int id = 0;
+    short* inode = createInode(disk,data);
+    
+    //find where to put inode
+    int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 1, blocks);  
+
+    for(int i = 10; i < 209; i++){ //find empty
+       if(TestBit(blocks,i) == 0){
+               SetBit(blocks,i);
+               id = i;
+               break;
+       }else if(i == 208){
+            printf("Error: out of inode memory");
+            exit(1);
+       }
+    }//for
+
+    char strID[4];
+    sprintf(strID, "%d", id);
+
+        //add directory to its  ***********
+    if( strcmp(tokens[0], "root") == 0 || strcmp(tokens[0], "hom") == 0){//put in root
+       addEntry( disk,2,  strID, id);
+    }else{
+        short cur =  2;
+        int time = 0;
+        while(time < len - 1){
+              char* path = tokens[time];
+
+              char* dir = malloc(sizeof(char) * BLOCK_SIZE);
+              short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
+              readBlock(disk, cur, dir);
+              int files = dir[0]; 
+              for(int i = 0; i < files; i++){ //find dir in parent
+                      int num = ((i+1)* 4);
+                        int node = dir[0+num];
+                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
+                                 //get content block from inode
+                                 readBlock(disk, node,  dirInode);
+                                 cur = dirInode[2];
+                                 readBlock(disk, cur, dir);
+                                break;
+                        }else if(i == files -1){
+                                printf("file %s could not be found in path", path);
+                                exit(1);
+                        } 
+              } //for
+              time++;
+        } //while
+        addEntry( disk,cur, strID, id);
+    }//else             *******************
+    
+    //write inode to block
+    writeBlock(disk, id, inode);
+    writeBlock(disk, 1, blocks);
+
+    //write the data to blocks specified by inode
+    for(int i =0; inode[2+i] != 0 ; i++ ){
+            char part[BLOCK_SIZE];                       //may cause problems
+            strncpy(part, data, BLOCK_SIZE);
+            //printf("%d: %s\n\n\n",i,part);
+            data += BLOCK_SIZE;
+            writeBlock(disk, inode[2+i], part);
+    }//for
+   
+    free(blocks);
+    free(inode);
+     
     return id;
 }
 
