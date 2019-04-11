@@ -228,7 +228,7 @@ void ReadDirectory(FILE* disk, char* data) {
     for(int i = 0 ; i <  dir[0]; i++){
              int num = ((i+1)* 4);
              int node = dir[0+num];
-             printf("%c%c%c\n",dir[1+num],dir[2+num],dir[3+num]);
+             printf("-%c%c%c\n",dir[1+num],dir[2+num],dir[3+num]);
     }
 
 }
@@ -373,12 +373,9 @@ int main(int argc, char* argv[]) {
  buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
  
-  
+*/  
       
-    printf("First File\n");
     int file = createFile(disk, "blah blah blah"); 
-    
-    printf("Second File\n");
     int file2 = createFile(disk, "hello person threre!!!!1");
    
     
@@ -387,13 +384,19 @@ int main(int argc, char* argv[]) {
 
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
-*/   
+   
     createDirectory(disk, "par");
     createDirectory(disk, "par/sub");
     createDirectory(disk, "qqq");
 
     ReadDirectory(disk, "par");
     ReadDirectory(disk, "par/sub");
+
+    char* buffer = readFile(disk, file);
+    printf("File: %s\n\n", buffer);
+
+    buffer = readFile(disk, file2);
+    printf("File 2: %s\n\n", buffer);
 
     //free(buffer);
     printf("done\n");
