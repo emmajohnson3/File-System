@@ -236,18 +236,22 @@ int createDirectory(FILE* disk, char* data) {
        addEntry( disk,2, tokens[0], id);
     }else{
         int cur =  2;
+        int time = 0;
         while(1){
+              char* path = tokens[time];
               printf("looking at inode %d\n" ,cur);
+              printf("looking for %s\n" ,path);
+
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
-                        printf("%c compared to %c: \n",dir[1+num],name[0]);
-                        printf("%c compared to %c: \n",dir[2+num],name[1]);
-                        printf("%c compared to %c: \n",dir[3+num],name[2]);
-                        if(dir[1+num]==name[0] && dir[2+num] == name[1] && dir[3+num] == name[2]){
+                        printf("%c compared to %c: \n",dir[1+num],path[0]);
+                        printf("%c compared to %c: \n",dir[2+num],path[1]);
+                        printf("%c compared to %c: \n",dir[3+num],path[2]);
+                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  printf("found inode: %d\n",node);
                         }
                         /*
@@ -256,6 +260,7 @@ int createDirectory(FILE* disk, char* data) {
                         printf("char 3 in %c: %d\n",dir[3+num],3+num);*/
                        
               }   
+              time++;
               break;
 
         } //while
