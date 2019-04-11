@@ -466,7 +466,7 @@ char* readFile(FILE* disk, int id) {
     char* content = malloc(size);
 
     int num = (size/BLOCK_SIZE)+1; 
-    
+    printf("int content: %d\n", content);
     for(int i =0; i < num; i++ ){
         printf("reading block: %d\n", inode[2+i]);
         readBlock(disk, inode[2+i], block);
