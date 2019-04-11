@@ -229,7 +229,7 @@ int createDirectory(FILE* disk, char* data) {
        addEntry( disk,2, tokens[0], id);
         printf("directory added to root\n");
     }else{
-        int cur =  2;
+        short cur =  2;
         int time = 0;
         while(time < len - 1){
               char* path = tokens[time];
@@ -237,7 +237,7 @@ int createDirectory(FILE* disk, char* data) {
               printf("looking for %s\n" ,path);
 
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
-              char* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
+              short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
@@ -251,10 +251,6 @@ int createDirectory(FILE* disk, char* data) {
                                  //get content block from inode
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
-                                 printf("print inode size: %d\n",dirInode[0]);
-                                 printf("print inode type: %d\n",dirInode[1]);
-                                 printf("print inode pointer: %d\n",dirInode[2]);
-                                 printf("print inode pointer 2: %d\n",dirInode[3]);
                                  readBlock(disk, cur, dir);
                                 break;
                         }else if(i = files -1){
