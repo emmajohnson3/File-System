@@ -1,3 +1,6 @@
+#ifndef RW_H
+#define RW_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,3 +29,5 @@ int createDirectory(FILE* disk, char* data) ;
 int createFile(FILE* disk, char* filePath, char* data) ;
 
 char* readFile(FILE* disk, int id);
+
+#endif
