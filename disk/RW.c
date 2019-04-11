@@ -190,7 +190,7 @@ int createDirectory(FILE* disk, char* data) {
         char** tokens = parse(disk,data);  
         char* name;
         int len;
-        for(len = 0; tokens[len] != NULL;i++){
+        for(len = 0; tokens[len] != NULL;len++){
                 name = tokens[len];
         } 
 
