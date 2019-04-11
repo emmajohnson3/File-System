@@ -224,7 +224,7 @@ void ReadDirectory(FILE* disk, char* data) {
                         }else if(i = files -1){
                                 printf("i:\n", i);
                                 printf("file %s could not be found in path\n", path);
-                                exit(1);
+                                exit(1); 
                         } 
               } //for
               time++;
