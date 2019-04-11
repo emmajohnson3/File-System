@@ -166,25 +166,6 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
 
 char** parse(FILE* disk,char* line){
     char **tokens = malloc(512 * sizeof(char*));
-    char *token;
-    char* name = malloc(512 * sizeof(char*));
-    strcpy (name, line);
-
-    token = strtok(name, "/\n");
-    int i = 0;
-    while (token != NULL) {
-        tokens[i] = token;
-        printf("token: %s\n",tokens[i]);
-        i++;
-        token = strtok(NULL, "/\n");
-    }
-     tokens[i] = NULL;
-    
-    //add directory to its parent
-    //if(i == 1){//put in root
-     //   addEntry( disk,2, tokens[0], int node);
-      //  return(tokens[0]);
-    //}
 
     return(tokens);
 }
