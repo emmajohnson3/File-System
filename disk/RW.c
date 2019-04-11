@@ -269,10 +269,15 @@ void deleteDirectory(FILE* disk, char* data) {
      printf("file is in %d\n", contentBlock);
 
      //delete from parent
+     if(parID == 2){
+             printf("parent is in %d\n", 2);
+        deleteEntry( disk,2, name);
+     }else{
       readBlock(disk, parID, dirInode);
       cur = dirInode[2];
       printf("parent is in %d\n", cur);
       deleteEntry( disk,cur, name);
+     }
 
     //unset vector bit of inode and content
     int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
