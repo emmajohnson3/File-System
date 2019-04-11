@@ -161,6 +161,7 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         root[2+num] = name[1]; 
         root[3+num] = name[2];
         writeBlock(disk, dirNum, root);
+        free(root);
 }
 
 char** parse(FILE* disk,char* line){
@@ -192,8 +193,8 @@ char** parse(FILE* disk,char* line){
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
        
-       char** tokens = parse(disk,data);  
-        char* name = tokens[0]; //change later
+       //char** tokens = parse(disk,data);  
+        char* name = "aaa"; //change later
 
         if(strlen(name)> 3){
            printf("name too large please keep it to 3 char\n");
