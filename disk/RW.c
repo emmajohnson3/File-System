@@ -194,7 +194,10 @@ char** parse(FILE* disk,char* line){
 int createDirectory(FILE* disk, char* data) {
        
         char** tokens = parse(disk,data);  
-        char* name = "aaa"; //change later
+        char* name;
+        for(int i =0; tokens[i] != NULL;i++){
+                name = tokens[i];
+        } 
 
         if(strlen(name)> 3){
            printf("name too large please keep it to 3 char\n");
