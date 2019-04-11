@@ -230,6 +230,7 @@ int createDirectory(FILE* disk, char* data) {
         printf("directory added to root\n");
     }else{
         int cur =  2;
+        int dirBlock =  2;
         int time = 0;
         while(time < len - 1){
               char* path = tokens[time];
@@ -251,6 +252,7 @@ int createDirectory(FILE* disk, char* data) {
                                  //get content block from inode
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
+                                 printf("next directory: %d\n",cur);
                                  readBlock(disk, cur, dir);
                                 break;
                         }else if(i = files -1){
