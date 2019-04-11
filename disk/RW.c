@@ -178,7 +178,7 @@ int createDirectory(FILE* disk, char* data) {
         char** tokens = parse(disk,data);
         char* name = malloc(sizeof(char) * 4);
         printf("here\n");
-        for(int i = 0; tokens[i] != NULL){
+        for(int i = 0; tokens[i] != NULL;i++){
              strcpy (name, tokens[i]);
         }
 printf("name: %s\n",name);
