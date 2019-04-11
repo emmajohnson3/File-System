@@ -233,8 +233,9 @@ int createDirectory(FILE* disk, char* data) {
         while(1){
               printf("looking at inode %d\n" ,cur);
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
-              readBlock(disk, cur, dir); 
-              for(int i = 0; i < dir[0]; i++){
+              readBlock(disk, cur, dir);
+              int files = dir[0]; 
+              for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
                         //root[0+num] = node;
                         printf("char 1 in %d: %d\n",dir[1+num],1+num);
