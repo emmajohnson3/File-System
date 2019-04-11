@@ -244,6 +244,9 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
+                        printf("%c compared to %c: \n",dir[1+num],name[0]);
+                        printf("%c compared to %c: \n",dir[2+num],name[1]);
+                        printf("%c compared to %c: \n",dir[3+num],name[2]);
                         if(dir[1+num]==name[0] && dir[2+num] == name[1] && dir[3+num] == name[2]){
                                  printf("found inode: %d\n",node);
                         }
