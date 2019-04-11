@@ -53,8 +53,8 @@ void CreateDisk(FILE* disk){
     root[2] = 'o'; 
     root[3] = 'm'; 
 
-    //writeBlock(disk, 2, root);
-    //writeBlock(disk, 1, block);
+    writeBlock(disk, 2, root);
+    writeBlock(disk, 1, block);
     //free(block);
     //free(super);
     free(root);
