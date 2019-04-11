@@ -48,10 +48,10 @@ void CreateDisk(FILE* disk){
     }
     //set root directory
     char* root = malloc(512);
-    super[0] = 0;
-    super[1] = 'h';
-    super[2] = 'o'; 
-    super[3] = 'm'; 
+    root[0] = 0;
+    root[1] = 'h';
+    root[2] = 'o'; 
+    root[3] = 'm'; 
 
     writeBlock(disk, 2, root);
     writeBlock(disk, 1, block);
@@ -151,6 +151,18 @@ int createFile(FILE* disk, char* data) {
     return id;
 }
 
+void addEntry(FILE* disk,int dirNum,char* name, int node){
+        char* root = malloc(512);
+        readBlock(disk, 2, root);  
+        int num = root[0];
+        num = ((num+1) * 4);
+        root[0+num] = node;
+        root[1+num] = name[0];
+        root[2+num] = name[1]; 
+        root[3+num] = name[2];
+        writeBlock(disk, dirNum, root);
+}
+
 char** parse(FILE* disk,char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
@@ -165,29 +177,33 @@ char** parse(FILE* disk,char* line){
         i++;
         token = strtok(NULL, "/\n");
     }
+     tokens[i] = NULL;
     
     //add directory to its parent
-    tokens[i] = NULL;
-        free(name);
+    //if(i == 1){//put in root
+     //   addEntry( disk,2, tokens[0], int node);
+      //  return(tokens[0]);
+    //}
+
     return(tokens);
 }
 
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
-        char** tokens = parse(disk,data);
-        char* name = malloc(sizeof(char) * 4);
-        printf("here\n");
-        for(int i = 0; tokens[i] != NULL;i++){
-             strcpy (name, tokens[i]);
-        }
-printf("name: %s\n",name);
+       
+       char** tokens = parse(disk,data);  
+        char* name = tokens[0]; //change later
+
         if(strlen(name)> 3){
            printf("name too large please keep it to 3 char\n");
            return -1;
         }else if(strlen(name)< 3){
            printf("name should be 3 chars long\n");
            return -1;
+        }else if(name == NULL){
+           printf("Invalid directory path\n");
+           return -1;  
         }
     //allocate inode 
     int id = 0;   
