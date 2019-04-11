@@ -244,9 +244,13 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
                         //root[0+num] = node;
+                        if(strcmp(dir[1+num], name[0])+strcmp(dir[2+num], name[1])+strcmp(dir[3+num], name[2]) == 0){
+                                 printf("found inode: %d\n",dir[0+num]);
+                        }
+                        /*
                         printf("char 1 in %c: %d\n",dir[1+num],1+num);
                         printf("char 2 in %c: %d\n",dir[2+num],2+num);
-                        printf("char 3 in %c: %d\n",dir[3+num],3+num);
+                        printf("char 3 in %c: %d\n",dir[3+num],3+num);*/
                        
               }   
               break;
@@ -254,7 +258,7 @@ int createDirectory(FILE* disk, char* data) {
         } //while
     }
 
-    printf("directory is in inode %d\n" ,id);
+    //printf("directory is in inode %d\n" ,id);
     //write inode to block
     writeBlock(disk, id, inode);
     writeBlock(disk, 1, blocks);
