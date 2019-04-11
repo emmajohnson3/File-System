@@ -346,10 +346,10 @@ int main(int argc, char* argv[]) {
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
 */
-       printf("dir 1\n");   
+   printf("dir 1\n");   
     createDirectory(disk, "par");
     printf("dir 2\n");
-    createDirectory(disk, "par/sub");
+    //createDirectory(disk, "par/sub");
 
 
     //free(buffer);
