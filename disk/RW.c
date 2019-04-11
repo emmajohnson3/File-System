@@ -138,17 +138,20 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //delete num - (num+3)
                                  printf("found!!!!!");
-                                 strcpy(newDir, dir);
-                                 strcpy (dir + num, newDir + num + 4);
+                                 dir[0] = num -1;
+                                for(int k = 0 ; k < 1000; k++ ){
+                                      dir[0+num] =  dir[0+num+4];
+                                       dir[1+num] =  dir[1+num+4];
+                                        dir[2+num] =  dir[2+num+4];
+                                         dir[3+num] =  dir[3+num+4];
+
+                                }
                                 break;
                         }else if(i == num -1){
                                 printf("delete entry failed\n");
                                 exit(1); 
                         } 
               } //for
-
-        printf("old: \n%s\n", dir);
-        printf("new: \n%s\n", newDir);
 
         writeBlock(disk, dirNum, newDir);
         free(dir);
