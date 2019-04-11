@@ -162,6 +162,12 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         root[2+num] = name[1]; 
         root[3+num] = name[2];
         writeBlock(disk, dirNum, root);
+
+        readBlock(disk, 2, root);
+        printf("%s", root[1+num]);
+        printf("%s", root[2+num]);
+        printf("%s", root[3+num]);
+
         free(root);
 }
 
@@ -238,9 +244,9 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < files; i++){
                       int num = ((i+1)* 4);
                         //root[0+num] = node;
-                        printf("char 1 in %s: %d\n",dir[1+num],1+num);
-                        printf("char 2 in %s: %d\n",dir[2+num],2+num);
-                        printf("char 3 in %s: %d\n",dir[3+num],3+num);
+                        printf("char 1 in %d: %d\n",dir[1+num],1+num);
+                        printf("char 2 in %d: %d\n",dir[2+num],2+num);
+                        printf("char 3 in %d: %d\n",dir[3+num],3+num);
               }   
               break;
 
