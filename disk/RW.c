@@ -152,7 +152,6 @@ int createFile(FILE* disk, char* data) {
 }
 
 void addEntry(FILE* disk,int dirNum,char* name, int node){
-        printf("add entry called******\n");
         char* root = malloc(512);
         readBlock(disk, 2, root);  
         int num = root[0];
@@ -203,7 +202,7 @@ void ReadDirectory(FILE* disk, char* data) {
         int time = 0;
         while(time < len){
               char* path = tokens[time];
-                printf("looking for %s in %d",path, cur);
+                printf("looking for %s in %d\n",path, cur);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
@@ -216,7 +215,7 @@ void ReadDirectory(FILE* disk, char* data) {
                                  readBlock(disk, cur, dir);
                                 break;
                         }else if(i = files -1){
-                                printf("file %s could not be found in path", path);
+                                printf("file %s could not be found in path\n", path);
                                 exit(1);
                         } 
               } //for
@@ -396,7 +395,8 @@ int main(int argc, char* argv[]) {
     printf("dir 2\n");
     createDirectory(disk, "qqq");
 
-    ReadDirectory(disk, "par/sub");
+    ReadDirectory(disk, "root");
+    ReadDirectory(disk, "par");
 
 
     //free(buffer);
