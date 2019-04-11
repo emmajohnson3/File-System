@@ -56,7 +56,7 @@ void CreateDisk(FILE* disk){
     writeBlock(disk, 2, root);
     writeBlock(disk, 1, block);
     //free(block);
-    //free(super);
+    //free(super);  //causes double free?
     free(root);
 }
 
@@ -163,7 +163,7 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         writeBlock(disk, dirNum, root);
         free(root);
 }
-/*
+
 char** parse(FILE* disk,char* line){
     char **tokens = malloc(512 * sizeof(char*));
     char *token;
@@ -187,13 +187,13 @@ char** parse(FILE* disk,char* line){
     //}
 
     return(tokens);
-}*/
+}
 
 //also returns pointer
 //must have name length 3 or less
 int createDirectory(FILE* disk, char* data) {
- /*      
-       //char** tokens = parse(disk,data);  
+       
+        char** tokens = parse(disk,data);  
         char* name = "aaa"; //change later
 
         if(strlen(name)> 3){
@@ -241,8 +241,8 @@ int createDirectory(FILE* disk, char* data) {
     writeBlock(disk, inode[2], content);
 
     //free(blocks);
-    //free(inode);*/
-    return 1;
+    //free(inode);
+    return id;
 }
 
 //read file given inode #, returns char *
@@ -293,7 +293,7 @@ int main(int argc, char* argv[]) {
  buffer = readFile(disk, file3);
     printf("File 3: %s\n\n", buffer);
  
- 
+  */
       
     printf("First File\n");
     int file = createFile(disk, "blah blah blah"); 
@@ -313,7 +313,7 @@ int main(int argc, char* argv[]) {
 
     free(buffer);
     printf("done\n");
- */
+
     fclose(disk);
     return 0;
 }
