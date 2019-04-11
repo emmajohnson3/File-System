@@ -136,8 +136,7 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //delete num - (num+3)
-                                 printf("found!!!!!");
-                                 dir[0] = num -1;
+                                 dir[0] = dir[0] 1;
                                 for(int k = 0 ; k < 1000; k++ ){
                                       dir[0+num] =  dir[0+num+4];
                                        dir[1+num] =  dir[1+num+4];
@@ -503,7 +502,7 @@ int main(int argc, char* argv[]) {
    
     createDirectory(disk, "par");
     createDirectory(disk, "qqq");
-    //createDirectory(disk, "par/sub");
+    createDirectory(disk, "par/sub");
 
     //ReadDirectory(disk, "par");
     //ReadDirectory(disk, "par/sub");
@@ -511,7 +510,8 @@ int main(int argc, char* argv[]) {
     ReadDirectory(disk, "root");
     printf("\n\n");
 
-    deleteDirectory(disk,"par");
+    deleteDirectory(disk,"par/sub");
+    deleteDirectory(disk,"qqq");
     ReadDirectory(disk, "root");
     ReadDirectory(disk, "par");
 
