@@ -124,6 +124,31 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         writeBlock(disk, dirNum, root);
         free(root);
 }
+// deleteEntry( disk,cur, name);
+void deleteEntry(FILE* disk,int dirNum,char* path){
+        char* dir = malloc(512);
+        char* newDir = malloc(512);
+        readBlock(disk, dirNum, dir);  
+        int num = dir[0];
+        int start =0;
+
+        for(int i = 0; i < num; i++){ 
+                        int num = ((i+1)* 4);
+                        int node = dir[0+num];
+                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
+                                 //delete num - (num+3)
+                                 strcpy(newDir, dir);
+                                 strcpy (dir + num, newDir + num + 4);
+                                break;
+                        }else if(i == num -1){
+                                printf("delete entry failed\n");
+                                exit(1); 
+                        } 
+              } //for
+       
+        writeBlock(disk, dirNum, dir);
+        free(dir);
+}
 
 char** parse(FILE* disk,char* line){
     char **tokens = malloc(512 * sizeof(char*));
@@ -191,6 +216,65 @@ void ReadDirectory(FILE* disk, char* data) {
              printf("-%c%c%c\n",dir[1+num],dir[2+num],dir[3+num]);
     }
 
+}
+
+//must be empty
+void deleteDirectory(FILE* disk, char* data) {
+       
+        char** tokens = parse(disk,data);  
+        char* name;
+        int len;
+        for(len = 0; tokens[len] != NULL;len++){
+                name = tokens[len];
+        }
+
+   int parID = 2;
+   int id = 2;
+   int contentBlock = 0;
+    //find directory
+    char* dir = malloc(sizeof(char) * BLOCK_SIZE);
+    short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
+    
+        short cur =  2; // content
+        int time = 0;
+        while(time < len){
+              char* path = tokens[time];
+              readBlock(disk, cur, dir);
+              int files = dir[0]; 
+              for(int i = 0; i < files; i++){ //find dir in parent
+                        int num = ((i+1)* 4);
+                        parID = id;
+                        id = dir[0+num];
+                        if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
+                                 //get content block from inode
+                                 readBlock(disk, id,  dirInode);
+                                 cur = dirInode[2];
+                                 readBlock(disk, cur, dir);
+                                break;
+                        }else if(i == files -1){
+                                printf("file %s could not be found in path\n", path);
+                                exit(1); 
+                        } 
+              } //for
+              time++;
+        } //while
+     //get id of files content block for unset   
+     readBlock(disk, id, dirInode);
+     contentBlock = dirInode[2];
+     printf("file is in %d\n", contentBlock);
+
+     //delete from parent
+      readBlock(disk, parID,  dirInode);
+      cur = dirInode[2];
+      deleteEntry( disk,cur, name);
+
+    //unset vector bit of inode and content
+    int* blocks = malloc(sizeof(char) * BLOCK_SIZE);
+    readBlock(disk, 1, blocks);  
+    ClearBit(blocks,contentBlock);
+    ClearBit(blocks,id);
+    writeBlock(disk, 1, blocks);
+  
 }
 
 //also returns pointer
@@ -400,28 +484,33 @@ int main(int argc, char* argv[]) {
     int file = createFile(disk, "y2apffIWMWnotk8uP0k2KuR0MkDpswtqMEJkGP4TcA1KgAc7d3AfAB78IaRTtNMtobRYefjXl0XzmKcRnvyU9Y006Z1raS0W0sZj8tgHbK4UXfTSpIpcFW3HelloaaaaaaacC5Pobfr9scWZeCgleJamIx4upRyl7Dx10pcKyXAe0N7BjZki6Ve1giPhtUwvItZDPUxs8NAbEoxxosl87aXBT8zCjv7xX6SwDb9s6jXI0fhUQ1o1qfSjGftUmi5mQ4CHcFlBTfhNBOOe3PIPKvaJ5Kwex3U5V25vbhB7ayEtJoHqDBtD70GOqpUfCpN8QazApuJd0301D5Rl0B6NXd54YBlDlI4tgwvqx6aosqZ99WjGaTutg5Ew8IpRn9lMTg9B53AeEcDn9mgQzA4R7rcGO8X189OA5BQH1W0ZWOJ0vGcsXcSXm5GLcAh3IG4P5h8WNYOpmcz14Ezmb2Fnf67RpTBYnI0tz1Mh2hOt04TPswPUDHJpv3z2tu47CNm6UJ5HrRG6nUr1GkaFPt02IOpaepwFqJ4bnVZLxT3fzA0oKaXKvCeMv02dpGMVL6bCFi0wtF4Lo9lHC5A9NqcawYBooop"); 
     int file2 = createFile(disk, "hello person threre!!!!1");
     int file3 = createFile(disk, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed diam mi, lobortis vitae ligula non, pharetra blandit turpis. Phasellus lectus nunc, porta in elementum et, ultrices sit amet libero. Nulla ullamcorper nibh urna, sit amet scelerisque erat facilisis et. Phasellus dapibus auctor velit, vel molestie ligula mollis at. Etiam ac dignissim sapien, ut pulvinar odio. Donec ac ornare orci, ac tempus nunc. Morbi sagittis sapien euismod molestie interdum. Suspendisse molestie justo semper, mollis nibh sit amet, malesuada enim. Suspendisse sapien tortor, sodales et dictum vitae, pellentesque vitae ex. Vivamus consectetur vel ante at tincidunt. Aenean efficitur tristique tempus. Pellentesque sollicitudin aliquam mauris. Donec gravida quam non est fermentum blandit ut et ipsum. Etiam ornare et lorem in iaculis. Phasellus id tellus in ligula mattis elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec aliquam in diam eu pharetra. Suspendisse consequat orci leo. Maecenas tincidunt ligula non fermentum elementum. Nunc sit amet finibus risus. Quisque diam erat, posuere in ex sed, maximus tempus nulla. Vestibulum eu laoreet arcu. Etiam at amet.");
- 
-*/  
+   */  
       
     int file = createFile(disk, "root","blah blah blah"); 
     int file2 = createFile(disk, "root","hello person threre!!!!1");
    
     createDirectory(disk, "par");
-    createDirectory(disk, "par/sub");
+    createDirectory(disk, "qqq");
+    //createDirectory(disk, "par/sub");
 
-    ReadDirectory(disk, "par");
-    ReadDirectory(disk, "par/sub");
+    //ReadDirectory(disk, "par");
+    //ReadDirectory(disk, "par/sub");
    
-    printf("\n\n");
     ReadDirectory(disk, "root");
+    printf("\n\n");
 
+    deleteDirectory(disk,"par");
+    ReadDirectory(disk, "root");
+    ReadDirectory(disk, "par");
+
+    /*
     char* buffer = readFile(disk, file);
     printf("File: %s\n\n", buffer);
 
     buffer = readFile(disk, file2);
     printf("File 2: %s\n\n", buffer);
 
-    free(buffer);
+    free(buffer);*/
     printf("done\n");
 
     fclose(disk);
