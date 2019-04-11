@@ -252,7 +252,9 @@ int createDirectory(FILE* disk, char* data) {
                         printf("reading dir\n");
                         char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
                         readBlock(disk, 2, buffer);
-                        printf("%s", buffer);
+                        printf("%s", buffer[0]);
+                        printf("%s", buffer[1]);
+                        printf("%s", buffer[2]);
               }   
               break;
 
