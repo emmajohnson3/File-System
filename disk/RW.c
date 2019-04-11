@@ -468,8 +468,9 @@ char* readFile(FILE* disk, int id) {
     int num = (size/BLOCK_SIZE)+1; 
     
     for(int i =0; i < num; i++ ){
-        printf("reading block: %d", inode[2+i]);
+        printf("reading block: %d\n", inode[2+i]);
         readBlock(disk, inode[2+i], block);
+         printf("reading block: %s\n", block);
         strcat(content,block);
     }//for
 
