@@ -236,9 +236,9 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < dir[0]; i++){
                       int num = ((i+1)* 4);
                         //root[0+num] = node;
-                        printf("char 1: %s\n",dir[1+num]);
-                        printf("char 2: %s\n",dir[2+num]);
-                        printf("char 3: %s\n",dir[3+num]);
+                        printf("char 1: %d\n",dir[1+num]);
+                        printf("char 2: %d\n",dir[2+num]);
+                        printf("char 3: %d\n",dir[3+num]);
               }   
 
         } //while
