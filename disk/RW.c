@@ -267,7 +267,7 @@ int createDirectory(FILE* disk, char* data) {
               time++;
         } //while
         printf("parent directory is in : %d\n",cur);
-        addEntry( disk,cur, name, id);
+        addEntry( disk,cur, "aaa", id);
     }//else
 
     //printf("directory is in inode %d\n" ,id);
