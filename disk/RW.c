@@ -162,12 +162,6 @@ void addEntry(FILE* disk,int dirNum,char* name, int node){
         root[2+num] = name[1]; 
         root[3+num] = name[2];
         writeBlock(disk, dirNum, root);
-/*
-        readBlock(disk, 2, root);
-        printf("%s", root[1+num]);
-        printf("%s", root[2+num]);
-        printf("%s", root[3+num]);
-*/
         free(root);
 }
 
@@ -181,7 +175,6 @@ char** parse(FILE* disk,char* line){
     int i = 0;
     while (token != NULL) {
         tokens[i] = token;
-        printf("token: %s\n",tokens[i]);
         i++;
         token = strtok(NULL, "/\n");
     }
@@ -234,6 +227,7 @@ int createDirectory(FILE* disk, char* data) {
     //add directory to its parent
     if( len == 1){//put in root
        addEntry( disk,2, tokens[0], id);
+        printf("directory added to root\n");
     }else{
         int cur =  2;
         int time = 0;
@@ -249,9 +243,9 @@ int createDirectory(FILE* disk, char* data) {
               for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
-                        /*printf("%c compared to %c: \n",dir[1+num],path[0]);
+                        printf("%c compared to %c: \n",dir[1+num],path[0]);
                         printf("%c compared to %c: \n",dir[2+num],path[1]);
-                        printf("%c compared to %c: \n",dir[3+num],path[2]);*/
+                        printf("%c compared to %c: \n",dir[3+num],path[2]);
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  printf("found inode: %d\n",node);
                                  //get content block from inode
