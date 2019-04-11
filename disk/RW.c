@@ -205,6 +205,7 @@ void ReadDirectory(FILE* disk, char* data) {
               printf("looking for %s in %d\n",path, cur);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
+              printf("num files: %d\n", files);
               for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
