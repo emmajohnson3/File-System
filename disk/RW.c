@@ -152,7 +152,7 @@ int createFile(FILE* disk, char* data) {
 }
 
 void addEntry(FILE* disk,int dirNum,char* name, int node){
-        printf("add entry called******\n")
+        printf("add entry called******\n");
         char* root = malloc(512);
         readBlock(disk, 2, root);  
         int num = root[0];
