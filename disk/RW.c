@@ -265,7 +265,6 @@ int createDirectory(FILE* disk, char* data) {
         addEntry( disk,cur, name, id);
     }//else
 
-    //printf("directory is in inode %d\n" ,id);
     //write inode to block
     writeBlock(disk, id, inode);
     writeBlock(disk, 1, blocks);
@@ -351,6 +350,8 @@ int main(int argc, char* argv[]) {
     createDirectory(disk, "par");
     printf("dir 2\n");
     createDirectory(disk, "par/sub");
+    printf("dir 2\n");
+    createDirectory(disk, "qqq");
 
 
     //free(buffer);
