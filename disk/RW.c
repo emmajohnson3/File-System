@@ -342,10 +342,7 @@ int main(int argc, char* argv[]) {
 
      char* buffer = malloc(sizeof(char) * BLOCK_SIZE);
     readBlock(disk, 2, buffer);
-    //printf("%s", buffer);
-    for (int i = 0; i < BLOCK_SIZE; i++){
-        printf("%2x ", buffer[i]);
-    }
+    printf("%s", buffer);
 
     //free(buffer);
     printf("done\n");
