@@ -150,10 +150,10 @@ int createFile(FILE* disk, char* data) {
      
     return id;
 }
-
+                              //2                 //id
 void addEntry(FILE* disk,int dirNum,char* name, int node){
         char* root = malloc(512);
-        readBlock(disk, 2, root);  
+        readBlock(disk, dirNum, root);  
         int num = root[0];
         root[0] = num +1;
         num = ((num+1) * 4);
@@ -254,8 +254,7 @@ int createDirectory(FILE* disk, char* data) {
            printf("Invalid directory path\n");
            return -1;  
         }
-         printf("before inode\n");
-         ReadDirectory(disk, "par");
+     
     //allocate inode 
     int id = 0;   
     short* inode = createInode(disk,"aaaa");// will allocate 1 block
@@ -275,9 +274,6 @@ int createDirectory(FILE* disk, char* data) {
             exit(1);
        }
     }//for
-
-     printf("before find parent\n");
-     ReadDirectory(disk, "par");
 
     //add directory to its parent
     if( len == 1){//put in root
@@ -327,9 +323,6 @@ int createDirectory(FILE* disk, char* data) {
     content [3] = name[2]; 
     content [4] = 0;  
     writeBlock(disk, inode[2], content);
-
-    printf("after content writes\n");
-         ReadDirectory(disk, "par");
 
     free(blocks);
     free(inode);
