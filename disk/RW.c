@@ -237,34 +237,38 @@ int createDirectory(FILE* disk, char* data) {
     }else{
         int cur =  2;
         int time = 0;
-        while(1){
+        while(time < len){
               char* path = tokens[time];
               printf("looking at inode %d\n" ,cur);
               printf("looking for %s\n" ,path);
 
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
+              char* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir);
               int files = dir[0]; 
-              for(int i = 0; i < files; i++){
+              for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
-                        printf("%c compared to %c: \n",dir[1+num],path[0]);
+                        /*printf("%c compared to %c: \n",dir[1+num],path[0]);
                         printf("%c compared to %c: \n",dir[2+num],path[1]);
-                        printf("%c compared to %c: \n",dir[3+num],path[2]);
+                        printf("%c compared to %c: \n",dir[3+num],path[2]);*/
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  printf("found inode: %d\n",node);
-                        }
-                        /*
-                        printf("char 1 in %c: %d\n",dir[1+num],1+num);
-                        printf("char 2 in %c: %d\n",dir[2+num],2+num);
-                        printf("char 3 in %c: %d\n",dir[3+num],3+num);*/
-                       
-              }   
+                                 //get content block from inode
+                                 readBlock(disk, node,  dirInode);
+                                 cur = dirInode[2];
+                                 readBlock(disk, cur, dir);
+                                break;
+                        }else if(i = files -1){
+                                printf("file %s could not be found in path", path);
+                                exit(1);
+                        } 
+              } //for
               time++;
-              break;
-
         } //while
-    }
+        printf("parent directory is in : %d\n",cur);
+        addEntry( disk,cur, name, id);
+    }//else
 
     //printf("directory is in inode %d\n" ,id);
     //write inode to block
@@ -349,9 +353,9 @@ int main(int argc, char* argv[]) {
     printf("File 2: %s\n\n", buffer);
 */
        printf("dir 1\n");   
-    createDirectory(disk, "ddd");
+    createDirectory(disk, "par");
     printf("dir 2\n");
-    createDirectory(disk, "ddd/mmm");
+    createDirectory(disk, "par/sub");
 
 
     //free(buffer);
