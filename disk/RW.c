@@ -378,13 +378,6 @@ int main(int argc, char* argv[]) {
     int file = createFile(disk, "blah blah blah"); 
     int file2 = createFile(disk, "hello person threre!!!!1");
    
-    
-    char* buffer = readFile(disk, file);
-    printf("File: %s\n\n", buffer);
-
-    buffer = readFile(disk, file2);
-    printf("File 2: %s\n\n", buffer);
-   
     createDirectory(disk, "par");
     createDirectory(disk, "par/sub");
     createDirectory(disk, "qqq");
