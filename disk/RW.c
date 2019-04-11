@@ -221,7 +221,7 @@ void ReadDirectory(FILE* disk, char* data) {
                                  printf("directory is in %d \n", cur);
                                  readBlock(disk, cur, dir);
                                 break;
-                        }else if(i = files -1){
+                        }else if(i == files -1){
                                 printf("i: %d\n", i);
                                 printf("file %s could not be found in path\n", path);
                                 exit(1); 
@@ -305,7 +305,7 @@ int createDirectory(FILE* disk, char* data) {
                                  cur = dirInode[2];
                                  readBlock(disk, cur, dir);
                                 break;
-                        }else if(i = files -1){
+                        }else if(i == files -1){
                                 printf("file %s could not be found in path", path);
                                 exit(1);
                         } 
