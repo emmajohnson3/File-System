@@ -378,7 +378,9 @@ int createDirectory(FILE* disk, char* data) {
 int createFile(FILE* disk, char* filePath, char* data) {
         char** tokens = parse(disk,filePath);  
         int len;
-        for(len = 0; tokens[len] != NULL;len++){ } 
+        for(len = 0; tokens[len] != NULL;len++){
+                printf("token: %s\n", tokens[len]);
+         } 
 
     //allocate inode    
     int id = 0;
