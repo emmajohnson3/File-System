@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
     printf("We can no longer acesss the directory :\n");
     ReadDirectory(disk, "root");
     printf("\n");
+    printf("Error will be thrown if we try to read it :\n");
     ReadDirectory(disk, "qqq");
     printf("\n\n");
 
