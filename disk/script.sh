@@ -16,4 +16,6 @@ hexdump -C vdisk
 gcc test3.c -o test3 RW.c -std=c99
 ./test3
 
+echo "This is what the vdisk looks like now: "
+hexdump -C vdisk
 echo "End of script"
