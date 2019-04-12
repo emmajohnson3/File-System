@@ -2,7 +2,8 @@
 
 int main(int argc, char* argv[]) {
     char* buffer =  malloc(sizeof(char) * 512 * 2);
-    FILE* disk = fopen("vdisk", "w+b");
+    FILE* disk = fopen("vdisk", "r+b");
+    CreateDisk(disk);
     
     printf("This fil tests directories\n\n");
     printf("We know the disk is persistant because the old files are still here:\n");

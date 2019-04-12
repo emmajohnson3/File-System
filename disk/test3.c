@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]) {
     char* buffer =  malloc(sizeof(char) * 512 * 2);
-    FILE* disk = fopen("vdisk", "w+b");
+    FILE* disk = fopen("vdisk", "r+b");
     printf("This fil tests deleting directiories\n\n");
    /* 
     printf("This fil tests directories\n\n");
