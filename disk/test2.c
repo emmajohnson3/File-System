@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     printf("Adding file 'I like dogs' to dir 'par':\n");
     int dogs = createFile(disk, "par","I like dogs");
     printf("Adding file 'I like mice' to dir 'par/sub':\n");
-    int mice = createFile(disk, "par","I like mice");
+    int mice = createFile(disk, "par/sub","I like mice");
 
     printf("\nThe files are now in the dirs and can be read:\n");
     ReadDirectory(disk, "par");
