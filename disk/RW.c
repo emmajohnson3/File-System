@@ -409,6 +409,7 @@ int createFile(FILE* disk, char* filePath, char* data) {
         short cur =  2;
         int time = 0;
         while(time < len){
+              printf("******* %d ? %d\n", time , len);
               char* path = tokens[time];
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
