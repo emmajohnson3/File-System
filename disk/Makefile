@@ -3,11 +3,8 @@ TARGETS = test1 test2 test3
 OBJS = RW.o
 JUNKF = $(OBJS) *~
 JUNKD = *.dSYM
-CFLAGS  += -g -std=gnu11 -I.
+CFLAGS  += -g -std=c99 -I.
 UNAME = $(shell uname)
-ifeq ($(UNAME), Linux)
-LDFLAGS += -pthread
-endif
 all: $(TARGETS)
 $(TARGETS): $(OBJS)
 tidy:
