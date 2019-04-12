@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
     printf("This fil tests deleting directiories\n\n");
     
     printf("Creating 'qqq' directory in root folder:\n");
-    createDirectory(disk, "par");
+    createDirectory(disk, "qqq");
 
     printf("file is now in the root directory:\n");
     ReadDirectory(disk, "root");
