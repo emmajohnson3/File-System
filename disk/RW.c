@@ -411,19 +411,16 @@ int createFile(FILE* disk, char* filePath, char* data) {
         short cur =  2;
         int time = 0;
         while(time < len){
-              printf("******* %d ? %d\n", time , len);
               char* path = tokens[time];
               char* dir = malloc(sizeof(char) * BLOCK_SIZE);
               short* dirInode = malloc(sizeof(char) * BLOCK_SIZE);
               readBlock(disk, cur, dir);
-              printf("*******looking at dir %d for %s\n", cur, path);
               int files = dir[0]; 
               for(int i = 0; i < files; i++){ //find dir in parent
                       int num = ((i+1)* 4);
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //get content block from inode
-                                  printf("******* its the %d file\n", i);
                                  readBlock(disk, node,  dirInode);
                                  cur = dirInode[2];
                                  readBlock(disk, cur, dir);
