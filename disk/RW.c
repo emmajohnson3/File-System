@@ -136,7 +136,7 @@ void deleteEntry(FILE* disk,int dirNum,char* path){
                         int node = dir[0+num];
                         if(dir[1+num]==path[0] && dir[2+num] == path[1] && dir[3+num] == path[2]){
                                  //delete num - (num+3)
-                                 dir[0] = dir[0] + 1;
+                                 dir[0] = dir[0] - 1;
                                 for(int k = 0 ; k < 1000; k++ ){
                                       dir[0+num] =  dir[0+num+4];
                                        dir[1+num] =  dir[1+num+4];

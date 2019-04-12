@@ -15,4 +15,4 @@ hexdump -C vdisk
 
 gcc test3.c -o test3 RW.c -std=c99
 ./test3
-echo "End of script"
+echo "End of test script"
