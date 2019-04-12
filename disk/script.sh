@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Bash script running"
+make
 ./test1
 
 echo "This is what the vdisk looks like: "
